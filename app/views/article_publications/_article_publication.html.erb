@@ -1,0 +1,13 @@
+<div class="card article_publication">
+  <div class="card-content">
+      <div class="card-header">
+        [<%= article_publication.id %>] <%= article_publication.article.name %>
+      </div>
+      <div class="card-body">
+        <%= display_text(article_publication.article.description, no_text: t('articles.no_desc'), truncate: 80) %>
+      </div>
+      <div class="card-footer">
+        nothing
+      </div>
+  </div>
+</div>

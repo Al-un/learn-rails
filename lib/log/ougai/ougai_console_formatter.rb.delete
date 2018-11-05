@@ -1,0 +1,49 @@
+module Log
+  module Ougai
+  class ConsoleFormatter < Ougai::Formatters::Base
+
+    def _call(severity, time, progname, data)
+      # puts "------------------------------------"
+      # puts "Calling:"
+      # puts "Severity: #{severity}"
+      # puts "time: #{time}"
+      # puts "progname: #{progname}"
+      # puts "data: #{data}"
+      # puts "------------------------------------"
+      super
+      # Extract message
+      
+      # Colorise severity and message
+      # if @plain
+      #   level = severity
+      #   msg = data.delete(:msg)
+      # else
+      #   level = colored_level(severity)
+      #   msg = colored_level(data.delete(:msg))
+      # end
+      # dt = format_datetime(time)
+      # err_str = create_err_str(data)
+
+      # @excluded_fields.each { |f| data.delete(f) }
+      # data_str = create_data_str(data)
+      # format_log_parts(dt, level, msg, err_str, data_str)
+    end
+
+    protected
+
+    def create_data_str(data)
+      # puts "Creating data STRING: #{data}"
+      super
+    end
+
+    private
+
+    # https://github.com/tilfin/ougai/blob/master/lib/ougai/formatters/base.rb#L42
+    # https://apidock.com/ruby/DateTime/strftime
+    def default_datetime_format
+      '%H:%M:%S.%L'
+    end
+
+  end
+  end
+end

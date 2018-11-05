@@ -1,0 +1,9 @@
+
+<%#
+hash  : https://stackoverflow.com/a/19339323/4906586
+CSS   : https://stackoverflow.com/a/52130554/4906586
+%>
+<pre style="width: 100%; word-break: break-all; white-space: pre-wrap;">
+  <%= raw JSON.pretty_generate(session[:userinfo]).gsub(" ","&nbsp;") %>
+</pre>
+<%#= debug ENV.to_h.to_yaml %>

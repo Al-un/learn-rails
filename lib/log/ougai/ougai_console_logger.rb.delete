@@ -1,0 +1,21 @@
+# require 'ougai/formatters/colored_readable'
+
+module Log
+  module Ougai
+  class ConsoleLogger < Ougai::Logger
+    include ActiveSupport::LoggerThreadSafeLevel
+    include LoggerSilence
+
+    def initialize(*args, **opts)
+      super
+      after_initialize if respond_to? :after_initialize
+    end
+
+    def create_formatter
+      # formatter = Log::OugaiConsoleFormatter.new
+      formatter = Ougai::Formatters::ColoredReadable.new
+    end
+
+  end
+  end
+end

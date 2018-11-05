@@ -1,0 +1,22 @@
+@import 'base/mixins';
+@import 'base/variables';
+// Layout related styling
+#nav-toolbar {
+    @include flexbox;
+    height: $toolbar-height;
+    background-color: $color-primary;
+    /* auth menu */
+    .nav-auth-menu,
+    .nav-home-menu {
+        a {
+            @include center-text($toolbar-height);
+            @include hoverable-bg-color($color-primary, $font-white, $color-primary-light, $font-black);
+            width: 100px;
+            text-decoration: none;
+        }
+    }
+}
+
+#nav-container {
+    padding: 24px;
+}

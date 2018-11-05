@@ -1,0 +1,18 @@
+<div class="item-edit">
+  <%= form_with model: article do |f| %>
+
+    <div class="item-header">
+      <%= f.text_field :name, placeholder: t('articles.field.name')+'*', class: 'item-name', required: true %>
+    </div>
+    <%= f.text_area :description, placeholder: t('articles.field.desc'), class: 'item-desc' %>
+
+    <div class="button-row">
+    <%# custom submit text: https://stackoverflow.com/a/4769520/4906586 %>
+    <%# https://stackoverflow.com/a/39034203/4906586 %>
+      <%= button_tag type: 'submit', id: 'save-button' do %>
+          <span><i class="fas fa-save"></i><%= submit_text %></span>
+      <% end %>
+    </div>
+
+  <% end %>
+</div>

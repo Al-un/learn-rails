@@ -1,0 +1,159 @@
+/**
+ * Common CSS attribute which requires compatibilities with older browsers
+ */
+
+// -------------------- Layouting ----------------------------------------------
+@mixin box-sizing($box-model: border-box) {
+    -webkit-box-sizing: $box-model; // Safari <= 5
+    -moz-box-sizing: $box-model; // Firefox <= 19
+    box-sizing: $box-model;
+}
+
+// https://web-design-weekly.com/2013/05/12/handy-sass-mixins/
+@mixin border-radius($radius: 4px) {
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+}
+
+//https://daviseford.com/blog/2018/01/10/scss-responsive-media-query-mixins.html
+@mixin lt-md {
+    @media (max-width: 767px) {
+        @content;
+    }
+}
+
+@mixin gt-md {
+    @media (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin gt-lg {
+    @media (min-width: 992px) {
+        @content;
+    }
+}
+
+// vertically and horizontally center a text content within a parent container
+// of the same height
+@mixin center-text($height) {
+    display: block; // for non-block tag such as <a>
+    height: $height; // need to force height to fit line-height
+    line-height: $height;
+    text-align: center; // horizontal alignment
+}
+
+// -------------------- Forms --------------------------------------------------
+// https://www.w3schools.com/howto/howto_css_placeholder.asp
+// https://stackoverflow.com/a/17181946/4906586
+@mixin placeholder {
+    &::placeholder {
+        opacity: 1;
+        @content
+    }
+    &::-webkit-input-placeholder {
+        @content
+    }
+    &:-moz-placeholder {
+        @content
+    }
+    &::-moz-placeholder {
+        @content
+    }
+    &:-ms-input-placeholder {
+        @content
+    }
+}
+
+// -------------------- Flexbox ------------------------------------------------
+// https://gist.github.com/richardtorres314/26b18e12958ba418bb37993fdcbfc1bd
+// Flexbox display
+@mixin flexbox() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+// Flex Flow Direction
+// - applies to: flex containers
+// row | row-reverse | column | column-reverse
+@mixin flex-direction($direction: column) {
+    -webkit-flex-direction: $direction;
+    -moz-flex-direction: $direction;
+    -ms-flex-direction: $direction;
+    flex-direction: $direction;
+}
+
+// Axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | space-between | space-around 
+@mixin justify-content($justify: space-between) {
+    -webkit-justify-content: $justify;
+    -moz-justify-content: $justify;
+    -ms-justify-content: $justify;
+    justify-content: $justify;
+    -ms-flex-pack: $justify;
+}
+
+// Cross-axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | baseline | stretch 
+@mixin align-items($align: center) {
+    -webkit-align-items: $align;
+    -moz-align-items: $align;
+    -ms-align-items: $align;
+    align-items: $align;
+}
+
+// Flex Line Wrapping
+// - applies to: flex containers
+// nowrap | wrap | wrap-reverse
+@mixin flex-wrap($wrap: wrap) {
+    -webkit-flex-wrap: $wrap;
+    -moz-flex-wrap: $wrap;
+    -ms-flex-wrap: $wrap;
+    flex-wrap: $wrap;
+}
+
+// -------------------- Misc ---------------------------------------------------
+// https://responsivedesign.is/articles/helpful-sass-mixins/
+// https://github.com/thesedays/scss-mixins/blob/master/css3-transitions.scss
+@mixin transition($property: all, $duration: 0.2s, $easing: ease-in-out) {
+    // -webkit-transition: $what $time $how;
+    // -moz-transition: $what $time $how;
+    // -ms-transition: $what $time $how;
+    // -o-transition: $what $time $how;
+    // transition: $what $time $how;
+    -webkit-transition-property: $property;
+    -moz-transition-property: $property;
+    -o-transition-property: $property;
+    -ms-transition-property: $property;
+    transition-property: $property;
+    -webkit-transition-duration: $duration;
+    -moz-transition-duration: $duration;
+    -o-transition-duration: $duration;
+    -ms-transition-duration: $duration;
+    transition-duration: $duration;
+    -webkit-transition-timing-function: $easing;
+    -moz-transition-timing-function: $easing;
+    -o-transition-timing-function: $easing;
+    -ms-transition-timing-function: $easing;
+    transition-timing-function: $easing;
+}
+
+// Qualify a container which, when hovered, change colours. It basically
+// involves a clickable content, hence the pointer.
+@mixin hoverable-bg-color($bgColor, $fontColor, $hvBgColor, $hvFontColor) {
+    @include transition(background-color color, 0.2s);
+    background-color: $bgColor;
+    color: $fontColor;
+    &:hover {
+        background-color: $hvBgColor;
+        color: $hvFontColor;
+        cursor: pointer;
+    }
+}

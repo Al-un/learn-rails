@@ -1,0 +1,18 @@
+<div class="card catalog">
+  <%= link_to catalog_path(catalog) do %>
+    <div class="card-content">
+      <div class="card-header">
+        [<%= catalog.id %>] <%= catalog.name %>
+      </div>
+      <div class="card-body">
+        <%= display_text(catalog.description, no_text: t('catalogs.no_desc'), truncate: 80) %>
+      </div>
+      <div class="card-footer">
+        <%# [TMP-001] %>
+        [<%= catalog.user %>]
+        <%# https://stackoverflow.com/a/52362539/4906586 %>
+        <%= t('articles.count', count: catalog.article_publications.size) %>
+      </div>
+    </div>
+  <% end %>
+</div>

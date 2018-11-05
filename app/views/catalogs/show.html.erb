@@ -1,0 +1,19 @@
+<h1><%= @catalog.code %> - <%= @catalog.name %></h1>
+
+<p><%= @catalog.description %></p>
+
+<div class="card-container">
+  <%= render @catalog.article_publications %>
+</div>
+
+<div class="button-row">
+  <%= button_to edit_catalog_path(@catalog), method: 'get' do%>
+    <span><i class="fas fa-edit"></i><%= t('form.edit') %></span>
+  <% end %>
+  <%= button_to catalog_path(@catalog), 
+      class: 'delete-button',
+      method: :delete, 
+      ata: { confirm: t('form.delete_confirm') } do %>
+      <span><i class="fas fa-trash"></i><%= t('form.delete') %></span>
+  <% end %>
+</div>

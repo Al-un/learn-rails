@@ -1,0 +1,34 @@
+<div class="item-edit">
+  <%= form_with model: catalog do |f| %>
+
+    <div class="item-header">
+      <%= f.text_field :code, placeholder: t('catalogs.field.code')+'*', class: 'catalog-code', required: true %>
+      <%= f.text_field :name, placeholder: t('catalogs.field.name')+'*', class: 'item-name', required: true %>
+    </div>
+    <%= f.text_area :description, placeholder: t('catalogs.field.desc'), class: 'item-desc' %>
+
+    <%# Nested form:
+    https://hackhands.com/building-has_many-model-relationship-form-cocoon/
+    https://makandracards.com/makandra/1346-popular-mistakes-when-using-nested-forms
+    %>
+    <div id="article_publications" class="card-container">
+      <%= f.fields_for :article_publications do |art_pub_form| %>
+        <%= render partial: 'article_publication_fields', locals: {f: art_pub_form, articles: articles} %>
+      <% end %>
+    </div>
+    <%= link_to_add_association t('articles.crud.add'), f, :article_publications,
+        'data-association-insertion-node' => "#article_publications",
+        'data-association-insertion-method' => 'append',
+        'partial' => 'article_publication_fields',
+        :wrap_object => Proc.new { |article_publication| article_publication.build_article; article_publication } %>
+
+    <div class="button-row">
+    <%# custom submit text: https://stackoverflow.com/a/4769520/4906586 %>
+    <%# https://stackoverflow.com/a/39034203/4906586 %>
+      <%= button_tag type: 'submit', id: 'save-button' do %>
+          <span><i class="fas fa-save"></i><%= submit_text %></span>
+      <% end %>
+    </div>
+
+  <% end %>
+</div>

@@ -1,0 +1,33 @@
+/* Catalog and co as style is a bit shared with articles and article publications*/
+
+@import 'base/mixins';
+/* Display catalogs list */
+
+/* editing catalog */
+
+.item-edit {
+    .item-header {
+        @include flexbox;
+        @include flex-wrap;
+    }
+    .catalog-code {
+        width: 100%;
+    }
+    .item-name {
+        flex: 1;
+    }
+    .item-desc {
+        @include box-sizing;
+        width: 100%;
+    }
+}
+
+@include gt-md {
+    .item-edit {
+        .catalog-code {
+            width: 20%;
+            max-width: 200px;
+            margin-right: 8px;
+        }
+    }
+}
