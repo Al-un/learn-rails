@@ -54,7 +54,8 @@ gem 'lograge-sql'
 # gem 'lograge-sql', path: '../../../ruby_lograge-sql'
 # Logging - Testing : Ougai with Awesome-print: 
 # https://github.com/tilfin/ougai#use-human-readable-formatter-for-console
-gem 'ougai', path: '../../ruby_ougai'
+# gem 'ougai', path: '../../ruby_ougai'
+gem 'ougai', git: 'https://github.com/Al-un/ougai', branch: 'feature/colorize'
 gem 'awesome_print'
 # Logging - Testing : Loggly
 gem 'logglier'
