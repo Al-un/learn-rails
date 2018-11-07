@@ -49,11 +49,12 @@ gem 'jquery-rails'
 # gem 'logging-rails', :require => 'logging/rails'
 # Logging - Testing : Lograge
 gem 'lograge'
-gem 'lograge-sql', git: 'https://github.com/Al-un/lograge-sql'
+gem 'lograge-sql'
+# gem 'lograge-sql', git: 'https://github.com/Al-un/lograge-sql'
 # gem 'lograge-sql', path: '../../../ruby_lograge-sql'
 # Logging - Testing : Ougai with Awesome-print: 
 # https://github.com/tilfin/ougai#use-human-readable-formatter-for-console
-gem 'ougai', path: '../../../../ruby_ougai'
+gem 'ougai', path: '../../ruby_ougai'
 gem 'awesome_print'
 # Logging - Testing : Loggly
 gem 'logglier'

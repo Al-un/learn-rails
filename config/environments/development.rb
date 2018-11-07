@@ -89,30 +89,44 @@ Rails.application.configure do
   # console_logger  = Log::OugaiConsoleLogger.new(STDOUT)
   # file_logger = Log::OugaiFileLogger.new(Rails.root.join('log/ougai_dev.log'))
   console_color = Ougai::Colors::Configuration.new(
-    severity: {
-      trace:  Ougai::Colors::WHITE,
-      debug:  Ougai::Colors::WHITE,
-      info:   Ougai::Colors::CYAN,
+    # severity: {
+    #   trace:  Ougai::Colors::WHITE,
+    #   debug:  Ougai::Colors::GREEN,
+    #   info:   Ougai::Colors::CYAN,
+    #   warn:   Ougai::Colors::YELLOW,
+    #   error:  Ougai::Colors::RED,
+    #   fatal:  Ougai::Colors::PURPLE
+    # },
+    msg: :severity,
+    datetime: {
+      trace:  Ougai::Colors::PURPLE,
+      debug:  Ougai::Colors::PURPLE,
+      info:   Ougai::Colors::PURPLE,
       warn:   Ougai::Colors::YELLOW,
       error:  Ougai::Colors::RED,
-      fatal:  Ougai::Colors::MAGENTA
-    },
-    msg: :inherited,
-    datetime: {
-      trace:  Ougai::Colors::WHITE,
-      debug:  Ougai::Colors::WHITE,
-      info:   Ougai::Colors::WHITE,
-      warn:   Ougai::Colors::MAGENTA,
-      error:  Ougai::Colors::MAGENTA,
-      fatal:  Ougai::Colors::MAGENTA
-    },
-    irrelevant_key: 'useless value but whatever'
+      fatal:  Ougai::Colors::RED
+    }
   )
-  console_formatter = Ougai::Formatters::Colored.new(
+  # console_formatter = Ougai::Formatters::Readable.new(
+  #   color_config: console_color,
+  #   msg_formatter: Log::Ougai::MsgFormatter.new(console_color),
+  #   data_formatter: Log::Ougai::DataFormatter.new
+  # )
+  console_formatter = Ougai::Formatters::Readable.new(
     color_config: console_color,
     msg_formatter: Log::Ougai::MsgFormatter.new(console_color),
-    data_formatter: Log::Ougai::DataFormatter.new
+    data_formatter: proc do |data|
+      # Lograge request detected
+      if data.key?(:request)
+        data[:request].reject { |k, _v| k == :not_required_key }
+                      .map { |key, val| "#{key}: #{val}" }
+                      .join(', ')
+      else
+        data.ai
+      end
+    end
   )
+  # console_formatter = Ougai::Formatters::Readable.new
   console_formatter.datetime_format = '%H:%M:%S.%L'
   file_formatter            = Ougai::Formatters::Bunyan.new
   file_logger               = Log::Ougai::Logger.new(Rails.root.join('log/ougai_dev.log'))
@@ -120,7 +134,7 @@ Rails.application.configure do
   console_logger            = Log::Ougai::Logger.new(STDOUT)
   console_logger.formatter  = console_formatter
   # testing default configuration: 
-  # console_logger.formatter  = Ougai::Formatters::Colored.new
+  # console_logger.formatter  = Ougai::Formatters::Readable.new
   console_logger.extend(Ougai::Logger.broadcast(file_logger))
   config.logger = console_logger
 

@@ -1,13 +1,5 @@
-GIT
-  remote: https://github.com/Al-un/lograge-sql
-  revision: da10d4993247af9a7f84485a4d3b9fde3293e155
-  specs:
-    lograge-sql (0.2.1)
-      activerecord (>= 4, < 6.0)
-      lograge (~> 0.4)
-
 PATH
-  remote: ../../../../ruby_ougai
+  remote: ../../ruby_ougai
   specs:
     ougai (1.7.0)
       oj (~> 3.4)
@@ -116,6 +108,9 @@ GEM
       activesupport (>= 4)
       railties (>= 4)
       request_store (~> 1.0)
+    lograge-sql (0.3.0)
+      activerecord (>= 4, < 6.0)
+      lograge (~> 0.4)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -248,7 +243,7 @@ DEPENDENCIES
   jwt
   logglier
   lograge
-  lograge-sql!
+  lograge-sql
   omniauth (~> 1.6.1)
   omniauth-auth0 (~> 2.0.0)
   ougai!

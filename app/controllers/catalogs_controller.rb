@@ -47,7 +47,8 @@ class CatalogsController < ApplicationController
     logger.debug({ custom: "Debugging: showing catalogs #{@catalog.id}" })
     logger.info "Info: showing catalogs #{@catalog.id}"
     logger.warn "Warn: showing catalogs #{@catalog.id}"
-
+    logger.trace('test') { "some trace"}
+    logger.error "some dummy error"
     begin
       error = wrong_method
     rescue => ex
