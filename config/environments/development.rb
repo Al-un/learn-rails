@@ -89,14 +89,14 @@ Rails.application.configure do
   # console_logger  = Log::OugaiConsoleLogger.new(STDOUT)
   # file_logger = Log::OugaiFileLogger.new(Rails.root.join('log/ougai_dev.log'))
   console_color = Ougai::Colors::Configuration.new(
-    # severity: {
-    #   trace:  Ougai::Colors::WHITE,
-    #   debug:  Ougai::Colors::GREEN,
-    #   info:   Ougai::Colors::CYAN,
-    #   warn:   Ougai::Colors::YELLOW,
-    #   error:  Ougai::Colors::RED,
-    #   fatal:  Ougai::Colors::PURPLE
-    # },
+    severity: {
+      trace:  Ougai::Colors::WHITE,
+      debug:  Ougai::Colors::GREEN,
+      info:   Ougai::Colors::CYAN,
+      warn:   Ougai::Colors::YELLOW,
+      error:  Ougai::Colors::RED,
+      fatal:  Ougai::Colors::PURPLE
+    },
     msg: :severity,
     datetime: {
       trace:  Ougai::Colors::PURPLE,
@@ -107,25 +107,25 @@ Rails.application.configure do
       fatal:  Ougai::Colors::RED
     }
   )
-  # console_formatter = Ougai::Formatters::Readable.new(
-  #   color_config: console_color,
-  #   msg_formatter: Log::Ougai::MsgFormatter.new(console_color),
-  #   data_formatter: Log::Ougai::DataFormatter.new
-  # )
   console_formatter = Ougai::Formatters::Readable.new(
     color_config: console_color,
     msg_formatter: Log::Ougai::MsgFormatter.new(console_color),
-    data_formatter: proc do |data|
-      # Lograge request detected
-      if data.key?(:request)
-        data[:request].reject { |k, _v| k == :not_required_key }
-                      .map { |key, val| "#{key}: #{val}" }
-                      .join(', ')
-      else
-        data.ai
-      end
-    end
+    data_formatter: Log::Ougai::DataFormatter.new
   )
+  # console_formatter = Ougai::Formatters::Readable.new(
+  #   color_config: console_color,
+  #   msg_formatter: Log::Ougai::MsgFormatter.new(console_color),
+  #   data_formatter: proc do |data|
+  #     # Lograge request detected
+  #     if data.key?(:request)
+  #       data[:request].reject { |k, _v| k == :not_required_key }
+  #                     .map { |key, val| "#{key}: #{val}" }
+  #                     .join(', ')
+  #     else
+  #       data.ai
+  #     end
+  #   end
+  # )
   # console_formatter = Ougai::Formatters::Readable.new
   console_formatter.datetime_format = '%H:%M:%S.%L'
   file_formatter            = Ougai::Formatters::Bunyan.new
