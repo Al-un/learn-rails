@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require 'ougai/formatters/colored'
-
 module Log
   module Ougai
-    class DataFormatter < ::Ougai::Formatters::Colored::DataFormatter
+    class DataFormatter < ::Ougai::Formatters::Readable::DataFormatter
 
       def call(data)
         # Lograge specfic stuff: main controller output handled by msg formatter

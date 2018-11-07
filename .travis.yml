@@ -1,0 +1,13 @@
+# Third party services
+services:
+  - postgresql
+  
+before_script:
+  - psql -c 'CREATE DATABASE learn_rails_dev;' -U postgres
+  - psql -c 'CREATE DATABASE learn_rails_test;' -U postgres
+  - rails db:migrate RAILS_ENV=test
+
+# Ruby stuff
+language: ruby
+rvm:
+  - 2.5.1

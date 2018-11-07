@@ -117,7 +117,7 @@ Rails.application.configure do
       msg: :inherited,
       datetime: :inherited
     )
-    console_formatter = Ougai::Formatters::Colored.new(
+    console_formatter = Ougai::Formatters::Readable.new(
       color_config: console_color,
       msg_formatter: Log::Ougai::MsgFormatter.new,
       data_formatter: Log::Ougai::DataFormatter.new

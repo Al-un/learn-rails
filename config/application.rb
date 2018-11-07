@@ -8,9 +8,6 @@ require 'rails/all'
 # include Log4r
 # require 'logging'
 require 'ougai'
-require 'ougai/colors'
-require 'ougai/colors/configuration'
-require 'ougai/formatters/colored'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
