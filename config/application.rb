@@ -26,7 +26,7 @@ module LearnZone
     # the framework and any gems in your application.
 
     # Custom environment files
-    if Rails.env.development? 
+    if Rails.env.development? || Rails.env.test?
       config.before_configuration do
         env_file = File.join(Rails.root, 'config', 'local_env.yml')
         if File.exist?(env_file)

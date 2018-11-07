@@ -1,13 +1,23 @@
-# Third party services
-services:
-  - postgresql
-  
-before_script:
-  - psql -c 'CREATE DATABASE learn_rails_dev;' -U postgres
-  - psql -c 'CREATE DATABASE learn_rails_test;' -U postgres
-  - rails db:migrate RAILS_ENV=test
-
-# Ruby stuff
+# Defining Ruby version(s)
 language: ruby
 rvm:
   - 2.5.1
+# Third party services
+services:
+  - postgresql
+# Caching
+cache: 
+  # Caching dependencies
+  bundler: true
+
+# Dependencies installation
+install:
+  - bundle install
+
+# Script definition
+before_script:
+  - psql -c 'CREATE DATABASE learn_rails_dev;' -U postgres
+  - psql -c 'CREATE DATABASE learn_rails_test;' -U postgres
+script:
+  - bundle exec rails db:migrate RAILS_ENV=test
+  - rspec
