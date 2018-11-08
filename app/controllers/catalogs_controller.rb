@@ -44,22 +44,6 @@ class CatalogsController < ApplicationController
   def show
     @catalog = Catalog.includes(article_publications: [:article]).find(params[:id])
 
-    logger.debug({ custom: "Debugging: showing catalogs #{@catalog.id}" })
-    logger.info "Info: showing catalogs #{@catalog.id}"
-    logger.warn "Warn: showing catalogs #{@catalog.id}"
-    logger.trace('test') { "some trace"}
-    logger.error "some dummy error"
-    begin
-      error = wrong_method
-    rescue => ex
-      logger.warn(ex)
-    end
-
-    # Ougai only
-    # logger.info('a message', {object: 'an object', another_object: 'another_object'})
-    # Logging
-    logger.info({msg: 'a message in specific field for Logging', object: 'an object', another_object: 'another_object'})
-
     respond_to do |format|
       format.html
       format.json { render json: @catalog }
