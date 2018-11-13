@@ -87,6 +87,10 @@ group :test do
   # gem 'chromedriver-helper' 
   # => temporarily removed due to error There was an error while trying to load
   # the gem 'chromedriver-helper'. (Bundler::GemRequireError)
+
+  # CodeClimate test formatting
+  gem 'simplecov'
+  gem 'simplecov-console'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
