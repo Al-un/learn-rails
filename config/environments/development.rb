@@ -135,7 +135,7 @@ Rails.application.configure do
         lograge_data = data[:request]
         if lograge_data.key?(:sql_queries)
           lograge_data[:sql_queries].map do |sql_query|
-            format('%<duration>6.2fms %<name>25s %<sql>s', sql_query)
+            format('%<duration>6.2fms %<name>25s %<sql>s (%<type_casted_binds>s)', sql_query)
           end
           .join("\n")
         else

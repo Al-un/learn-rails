@@ -1,13 +1,18 @@
-<div class="card article_publication">
+<div id="article_publication_<%= article_publication.id %>" class="card article_publication">
   <div class="card-content">
       <div class="card-header">
-        [<%= article_publication.id %>] <%= article_publication.article.name %>
+        [<%= article_publication.id %>] <%= article_publication.catalog.name %> - <%= article_publication.article.name %>
       </div>
       <div class="card-body">
         <%= display_text(article_publication.article.description, no_text: t('articles.no_desc'), truncate: 80) %>
       </div>
-      <div class="card-footer">
-        nothing
+      <div class="card-footer button-row">
+        <%= button_to article_publication_path(article_publication), 
+            class: 'delete-button',
+            method: :delete, remote: true,
+            data: { confirm: t('form.delete_confirm') } do %>
+            <span><i class="fas fa-trash"></i><%= t('form.delete') %></span>
+        <% end %>
       </div>
   </div>
 </div>

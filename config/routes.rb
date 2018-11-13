@@ -12,10 +12,18 @@ Rails.application.routes.draw do
   get 'auth/logout' => 'logout#logout'
 
   # Articles
-  resources :articles
+  resources :articles do
+    resources :article_publications
+    collection do
+      get 'search', to: 'articles#search', as: 'search'
+    end
+  end
   resources :catalogs do
     resources :article_publications
-    resources :articles, only: [:index, :show]
+    collection do
+      get 'search', to: 'catalogs#search', as: 'search'
+    end
   end
+  resources :article_publications, only: [:create, :show, :update, :destroy]
 
 end

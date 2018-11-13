@@ -19,13 +19,19 @@ Rails.application.configure do
   end
 
   # Lograge SQL
-  config.lograge_sql.extract_event = proc do |event|
+  event_extractor = proc do |event|
+    # puts '~~~~~~~~'
+    # puts event.inspect
+    # puts '~~~~~~~~'
     {
       name: event.payload[:name],
       duration: event.duration.to_f.round(2),
-      sql: event.payload[:sql]
+      sql: event.payload[:sql],
+      type_casted_binds: event.payload[:type_casted_binds].inspect
     }
   end
+
+  config.lograge_sql.extract_event = event_extractor
   config.lograge_sql.formatter = proc do |sql_queries|
     sql_queries
   end

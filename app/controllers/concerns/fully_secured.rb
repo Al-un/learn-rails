@@ -1,3 +1,4 @@
+# Module for controllers where all methods are secured
 module FullySecured
   extend ActiveSupport::Concern
   include Secured

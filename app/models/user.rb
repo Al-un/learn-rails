@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Copy of Auth0 users
 class User < ApplicationRecord
 
   # associations: products
@@ -12,5 +15,4 @@ class User < ApplicationRecord
   def to_s
     auth0_id
   end
-  
 end

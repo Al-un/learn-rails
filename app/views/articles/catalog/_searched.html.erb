@@ -1,0 +1,11 @@
+<% @searched_list.each do |catalog| %>
+  <div>
+    <span><%= catalog.code %></span>
+    <span><%= catalog.name %></span>
+    <%= button_to article_article_publications_path(@source_id), 
+                  method: :post, remote: true,
+                  params: { catalog_id: catalog.id } do %>
+      <span><i class="fas fa-plus"></i><%= t('form.add') %></span>
+    <% end %>
+  </div>
+<% end %>

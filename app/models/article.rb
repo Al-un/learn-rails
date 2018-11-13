@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# An article is an element which can be ordered and displayed via a Catalog
 class Article < ApplicationRecord
 
   # associations
@@ -10,4 +13,6 @@ class Article < ApplicationRecord
   # validations
   validates_presence_of :name
 
+  # Scopes
+  scope :for_name, ->(name) { where("name like ?", "#{name}%")}
 end

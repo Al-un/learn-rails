@@ -32,3 +32,6 @@
 # Ignore Yard documentation
 /doc
 .yardoc
+
+# Ignore dummy Ruby file
+/pouet.rb

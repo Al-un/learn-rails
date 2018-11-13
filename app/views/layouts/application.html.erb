@@ -31,6 +31,15 @@
     <%= link_to '/misc-info', misc_info_path %>
 
     <div id="nav-container">
+
+      <% flash.each do |lvl, content| %>
+        <div class="flash flash-<%= lvl %>">
+          <%= content %>
+        </div>
+      <% end %>
+
+      <div id="ajax_error"></div>
+
       <%= yield %>
     </div>
   </body>

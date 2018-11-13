@@ -1,5 +1,6 @@
 @import 'base/mixins';
 @import 'base/variables';
+// ---------- navigation components --------------------------------------------
 // Layout related styling
 #nav-toolbar {
     @include flexbox;
@@ -19,4 +20,36 @@
 
 #nav-container {
     padding: 24px;
+}
+
+// ---------- common feedback --------------------------------------------------
+.flash {
+    @include border-radius;
+    padding: 8px;
+}
+
+// copied from bootstrap: https://v4-alpha.getbootstrap.com/components/alerts/
+.flash-success,
+.flash-notice {
+    background-color: #dff0d8;
+    border: 1px solid #d0e9c6;
+    color: #3c763d;
+}
+
+.flash-info {
+    background-color: #d9edf7;
+    border: 1px solid #bcdff1;
+    color: #31708f;
+}
+
+.flash-warning {
+    background-color: #fcf8e3;
+    border: 1px solid #faf2cc;
+    color: #8a6d3b;
+}
+
+.flash-error {
+    background-color: #f2dede;
+    border: 1px solid #ebcccc;
+    color: #a94442;
 }
