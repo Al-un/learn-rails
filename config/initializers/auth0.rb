@@ -17,7 +17,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 end
 
 Rails.application.configure do
-  puts ' ---------- Application configuration: Auth0 ----------'
+  puts ' ===[AppConfig]=== Auth0'
   # Redirect OmniAuth logs to Rails logger
   OmniAuth.config.logger = Rails.logger
 end

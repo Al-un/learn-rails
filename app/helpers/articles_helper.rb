@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Articles related helping methods
 module ArticlesHelper
   include Shared::ControllerHelper
 

@@ -15,7 +15,8 @@ Bundler.require(*Rails.groups)
 
 module LearnZone
   class Application < Rails::Application
-    puts ' ---------- Application configuration: start ----------'
+    # puts ' ----------------------------------------------------------------------'
+  puts ' ===[AppConfig]=== start'
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
@@ -49,7 +50,11 @@ module LearnZone
       puts '** /!\ Application is currently is Offline/!\ **'
     end
 
-    puts ' ---------- Application configuration: end ----------'
+    # For Heroku
+    # https://stackoverflow.com/a/19650687/4906586
+    config.assets.initialize_on_precompile = false
+
+    puts ' ===[AppConfig]=== end'
   end
   
 end

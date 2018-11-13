@@ -10,14 +10,28 @@ cache:
   # Caching dependencies
   bundler: true
 
+env:
+  global:
+    # CC_TEST_REPORTER_ID defined in environment variables
+    
+# Dependencies
+before_install:
+  # Code Climate: initialization
+  # note: simplecov and simplecov-console gems required
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 # Dependencies installation
 install:
   - bundle install
 
 # Script definition
 before_script:
-  - psql -c 'CREATE DATABASE learn_rails_dev;' -U postgres
   - psql -c 'CREATE DATABASE learn_rails_test;' -U postgres
 script:
   - bundle exec rails db:migrate RAILS_ENV=test
   - rspec
+  
+after_script:
+  # Code Climate: sending report
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

@@ -37,6 +37,7 @@ en:
     logout: 'Logout'
   # Form
   form:
+    add: 'Add'
     create: 'Create'
     edit: 'Edit'
     update: 'Update'

@@ -1,0 +1,3 @@
+$('#article_publications').prepend(
+    "<%= escape_javascript(render partial: 'article_publication', locals: {article_publication: @entity} ) %>"
+);

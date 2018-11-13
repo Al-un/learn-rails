@@ -1,5 +1,23 @@
-<h2><%= @article.name %></h2>
-
-<div>
-  <%= @article.description %>
+<%# Article definition and edition buttons %>
+<div id="entity">
+  <%= render partial: '/articles/article_detail', locals: { article: @entity } %>
 </div>
+
+<%# Article publications definition %>
+<div id="article_publications" class="card-container">
+  <%= render @entity.article_publications %>
+</div>
+
+<%# Catalogs search to create article publication %>
+<%= form_with url: search_catalogs_path, method: :get do |form| %>
+
+  <%= form.label :name, "Search for:" %>
+  <%= form.text_field :name %>
+
+  <%= form.hidden_field :source_id, value: @entity.id %>
+  <%= form.hidden_field :partial_path, value: 'articles/catalog/searched' %>
+  <%= form.submit "Search" %>
+
+<% end %>
+
+<div id="searched_catalogs"></div>

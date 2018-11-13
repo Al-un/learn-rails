@@ -2,7 +2,7 @@
   <%= form_with model: article do |f| %>
 
     <div class="item-header">
-      <%= f.text_field :name, placeholder: t('articles.field.name')+'*', class: 'item-name', required: true %>
+      <%= f.text_field :name, placeholder: t('articles.field.name')+'*', class: 'item-name' %>
     </div>
     <%= f.text_area :description, placeholder: t('articles.field.desc'), class: 'item-desc' %>
 

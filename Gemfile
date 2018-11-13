@@ -54,9 +54,11 @@ gem 'lograge-sql'
 # gem 'lograge-sql', path: '../../../ruby_lograge-sql'
 # Logging - Testing : Ougai with Awesome-print: 
 # https://github.com/tilfin/ougai#use-human-readable-formatter-for-console
-# gem 'ougai', path: '../../ruby_ougai'
-gem 'ougai', git: 'https://github.com/Al-un/ougai', branch: 'feature/colorize'
 gem 'awesome_print'
+gem 'ougai'
+gem 'ougai-formatters-customizable'
+# gem 'ougai', path: '../../ruby_ougai'
+# gem 'ougai', git: 'https://github.com/Al-un/ougai', branch: 'feature/colorize'
 # Logging - Testing : Loggly
 gem 'logglier'
 
@@ -85,6 +87,10 @@ group :test do
   # gem 'chromedriver-helper' 
   # => temporarily removed due to error There was an error while trying to load
   # the gem 'chromedriver-helper'. (Bundler::GemRequireError)
+
+  # CodeClimate test formatting
+  gem 'simplecov'
+  gem 'simplecov-console'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Catalag related helping methods
 module CatalogsHelper
   include Shared::ControllerHelper
 

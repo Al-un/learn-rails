@@ -1,6 +1,13 @@
+# Methods to check user authorization for a given method
 module Secured 
   extend ActiveSupport::Concern
-  
+
+  # Check if the current session is a logged in session.
+  #
+  # @see .check_logged_in_web
+  # @see .check_logged_in_json
+  # @return [nil,Error] nothing if everything is alright or HTML-redirection to
+  # login page / JSON-error if any authentication is missing or wrong
   def logged_in?
     ## different behaviour per format
     req_format = request.format
@@ -20,6 +27,8 @@ module Secured
   private # --------------------------------------------------------------------
 
   # Fetch Authorization token, if present
+  #
+  # @return [String,nil] Authorization header if present
   def http_authorization_token
     auth_header = request.headers['Authorization']
     if auth_header.present?
@@ -33,9 +42,8 @@ module Secured
   end
 
   # Fetch logged-in user
-  # [TODO] may not be optimal but it is tolerable for this project
+  # @todo may not be optimal but it is tolerable for this project
   def get_logged_user(user_external_id)
-    logger.debug 'Logged user is ' + user_external_id
     User.first_or_create!(auth0_id: user_external_id)
   end
 
@@ -46,7 +54,7 @@ module Secured
     userinfo = session[:userinfo]
     if userinfo.present?
       @user = get_logged_user(userinfo['uid'])
-      logger.trace "[Auth/Web] User #{@user.auth0_id} is logged"
+      logger.debug "[Auth/Web] User #{@user.auth0_id} is logged"
     else
       logger.info '[Auth/HTML] User redirected to authentication page'
       redirect_to '/auth/auth0'
@@ -59,7 +67,8 @@ module Secured
 
     # check if Bearer is here
       @auth_payload, @auth_header = auth_token
-      @user = get_logged_user(@auth_payload[:sub])
+      # logger.debug 'Auth_token: ' + auth_token.to_s + ' => ' + @auth_payload['sub'].to_s
+      @user = get_logged_user(@auth_payload['sub'])
     rescue JWT::VerificationError, JWT::DecodeError => err
       logger.info `[Auth/JSON] Error: #{err}`
       render json: { errors: ['Authentication error'] }, status: :unauthorized

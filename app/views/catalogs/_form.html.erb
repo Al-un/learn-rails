@@ -11,21 +11,23 @@
     https://hackhands.com/building-has_many-model-relationship-form-cocoon/
     https://makandracards.com/makandra/1346-popular-mistakes-when-using-nested-forms
     %>
+    <%# Keep for knowledge purpose (cocoon gem):
     <div id="article_publications" class="card-container">
-      <%= f.fields_for :article_publications do |art_pub_form| %>
-        <%= render partial: 'article_publication_fields', locals: {f: art_pub_form, articles: articles} %>
-      <% end %>
+      <%= f.fields_for :article_publications do |art_pub_form| >
+        <%= render partial: 'article_publication_fields', locals: {f: art_pub_form, articles: articles} >
+      <% end >
     </div>
     <%= link_to_add_association t('articles.crud.add'), f, :article_publications,
         'data-association-insertion-node' => "#article_publications",
         'data-association-insertion-method' => 'append',
         'partial' => 'article_publication_fields',
-        :wrap_object => Proc.new { |article_publication| article_publication.build_article; article_publication } %>
+        :wrap_object => Proc.new { |article_publication| article_publication.build_article; article_publication } >
+    %>
 
     <div class="button-row">
-    <%# custom submit text: https://stackoverflow.com/a/4769520/4906586 %>
-    <%# https://stackoverflow.com/a/39034203/4906586 %>
-      <%= button_tag type: 'submit', id: 'save-button' do %>
+      <%# custom submit text: https://stackoverflow.com/a/4769520/4906586 %>
+      <%# https://stackoverflow.com/a/39034203/4906586 %>
+      <%= button_tag type: 'submit', id: 'save-button', remote: true do %>
           <span><i class="fas fa-save"></i><%= submit_text %></span>
       <% end %>
     </div>
