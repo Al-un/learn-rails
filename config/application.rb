@@ -50,6 +50,10 @@ module LearnZone
       puts '** /!\ Application is currently is Offline/!\ **'
     end
 
+    # For Heroku
+    # https://stackoverflow.com/a/19650687/4906586
+    config.assets.initialize_on_precompile = false
+
     puts ' ===[AppConfig]=== end'
   end
   
