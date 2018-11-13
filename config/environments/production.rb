@@ -103,36 +103,79 @@ Rails.application.configure do
   # see config/initializers/lograge.rb
 
   # === Ougai
-  # Console output
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
-    console_color = Ougai::Colors::Configuration.new(
-      severity: {
-        trace:  Ougai::Colors::WHITE,
-        debug:  Ougai::Colors::WHITE,
-        info:   Ougai::Colors::CYAN,
-        warn:   Ougai::Colors::YELLOW,
-        error:  Ougai::Colors::RED,
-        fatal:  Ougai::Colors::MAGENTA
-      },
-      msg: :inherited,
-      datetime: :inherited
-    )
-    console_formatter = Ougai::Formatters::Readable.new(
-      color_config: console_color,
-      msg_formatter: Log::Ougai::MsgFormatter.new,
-      data_formatter: Log::Ougai::DataFormatter.new
-    )
-    file_formatter            = Ougai::Formatters::Bunyan.new
-    file_logger               = Log::Ougai::Logger.new(Rails.root.join('log/ougai_prod.log'))
-    file_logger.formatter     = file_formatter
-    console_logger            = Log::Ougai::Logger.new(STDOUT)
-    console_logger.formatter  = console_formatter
-    console_logger.extend(Ougai::Logger.broadcast(file_logger))
-    config.logger = console_logger
-  # File only
-  else
-    config.logger = Log::Ougai::Logger.new(Rails.root.join('log/production.log'))
-  end
+  # console_logger  = Log::OugaiConsoleLogger.new(STDOUT)
+  # file_logger = Log::OugaiFileLogger.new(Rails.root.join('log/ougai_dev.log'))
+  color_config = Ougai::Formatters::Colors::Configuration.new(
+    severity: {
+      trace:  Ougai::Formatters::Colors::WHITE,
+      debug:  Ougai::Formatters::Colors::GREEN,
+      info:   Ougai::Formatters::Colors::CYAN,
+      warn:   Ougai::Formatters::Colors::YELLOW,
+      error:  Ougai::Formatters::Colors::RED,
+      fatal:  Ougai::Formatters::Colors::PURPLE
+    },
+    msg: :severity,
+    datetime: {
+      default:  Ougai::Formatters::Colors::PURPLE,
+      error:  Ougai::Formatters::Colors::RED,
+      fatal:  Ougai::Formatters::Colors::RED
+    }
+  )
+
+  EXCLUDED_FIELD = []
+  LOGRAGE_REJECT = [:sql_queries, :sql_queries_count]
+
+  console_formatter = Ougai::Formatters::Customizable.new(
+    format_msg: proc do |severity, datetime, _progname, data|
+      # Remove :msg regardless the outcome
+      msg = data.delete(:msg)
+      # Lograge specfic stuff: main controller output handled by msg formatter
+      if data.key?(:request)
+        lograge = data[:request].reject { |k, _v| LOGRAGE_REJECT.include?(k) }
+                                .map { |key, val| "#{key}: #{val}" }
+                                .join(', ')
+        msg = color_config.color(:msg, lograge, severity)
+      # Standard text
+      else
+        msg = color_config.color(:msg, msg, severity)
+      end
+
+      # Standardize output
+      format('%-5s %s: %s',
+             color_config.color(:severity, severity, severity),
+             color_config.color(:datetime, datetime, severity),
+             msg)
+    end,
+    format_data: proc do |data|
+      # Lograge specfic stuff: main controller output handled by msg formatter
+      if data.key?(:request)
+        lograge_data = data[:request]
+        if lograge_data.key?(:sql_queries)
+          lograge_data[:sql_queries].map do |sql_query|
+            format('%<duration>6.2fms %<name>25s %<sql>s (%<type_casted_binds>s)', sql_query)
+          end
+          .join("\n")
+        else
+          nil
+        end
+      # Default styling
+      else
+        EXCLUDED_FIELD.each { |field| data.delete(field) }
+        next nil if data.empty?
+
+        data.ai
+      end
+    end
+  )
+  file_formatter            = Ougai::Formatters::Bunyan.new
+  file_logger               = Log::Ougai::Logger.new(Rails.root.join('log/ougai_prod.log'))
+  file_logger.formatter     = file_formatter
+  console_logger            = Log::Ougai::Logger.new(STDOUT)
+  console_logger.formatter  = console_formatter
+  # testing default configuration: 
+  # console_logger.formatter  = Ougai::Formatters::Readable.new
+  console_logger.extend(Ougai::Logger.broadcast(file_logger))
+  config.logger = console_logger
 
   # Loggly
   # see config/initializers/loggly.rb
