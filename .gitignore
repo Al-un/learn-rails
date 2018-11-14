@@ -35,3 +35,6 @@
 
 # Ignore dummy Ruby file
 /pouet.rb
+
+# Ignore Simplecov/CodeCode output
+/coverage
