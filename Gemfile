@@ -91,6 +91,10 @@ group :test do
   # CodeClimate test formatting
   gem 'simplecov'
   gem 'simplecov-console'
+  # Object factories for dummy data
+  gem 'factory_bot_rails'
+  # Clean database between test
+  gem 'database_cleaner'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

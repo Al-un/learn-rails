@@ -1,2 +1,4 @@
-<%= render partial: 'form', locals: 
-    {submit_text: t('form.create'), catalog: @entity, remote: false} %>
+<%= render 
+  partial: 'form', 
+  locals: { submit_text: t('form.create'), catalog: @entity, local: true }
+%>
