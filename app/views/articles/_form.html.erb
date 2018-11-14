@@ -1,5 +1,5 @@
 <div class="item-edit">
-  <%= form_with model: article do |f| %>
+  <%= form_with model: article, local: local do |f| %>
 
     <div class="item-header">
       <%= f.text_field :name, placeholder: t('articles.field.name')+'*', class: 'item-name' %>

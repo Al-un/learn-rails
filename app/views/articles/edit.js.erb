@@ -1,3 +1,6 @@
 $('#entity').html(
-    "<%= escape_javascript(render partial: 'form', locals: {submit_text: t('form.update'), article: @entity} ) %>"
+    "<%= escape_javascript(\
+    render partial: 'form',\
+    locals: {submit_text: t('form.update'), article: @entity, local: false}\
+    ) %>"
 );
