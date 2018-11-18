@@ -1,4 +1,8 @@
+<!-- Travis -->
 [![Build Status](https://travis-ci.com/Al-un/learn-zone-rails.svg?branch=master)](https://travis-ci.com/Al-un/learn-zone-rails)
+<!-- Circle CI -->
+[![CircleCI](https://circleci.com/gh/Al-un/learn-zone-rails/tree/master.svg?style=svg)](https://circleci.com/gh/Al-un/learn-zone-rails/tree/master)
+<!-- Code Climate -->
 [![Maintainability](https://api.codeclimate.com/v1/badges/a1cd2c7d60769ef7a1b9/maintainability)](https://codeclimate.com/github/Al-un/learn-zone-rails/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a1cd2c7d60769ef7a1b9/test_coverage)](https://codeclimate.com/github/Al-un/learn-zone-rails/test_coverage)
 
