@@ -9,7 +9,7 @@
 </div>
 
 <%# Articles search to create article publication %>
-<%= form_with url: search_articles_path, method: :get do |form| %>
+<%= form_with url: search_articles_path, method: :get, local: false do |form| %>
 
   <%= form.label :name, "Search for:" %>
   <%= form.text_field :name %>
