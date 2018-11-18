@@ -35,3 +35,6 @@ script:
 after_script:
   # Code Climate: sending report
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+ notifications:
+    slack: al-un:M8h8Q9RJD8nk6D6s45AEEc6q
