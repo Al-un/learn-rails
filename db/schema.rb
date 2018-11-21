@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_28_171548) do
+ActiveRecord::Schema.define(version: 2018_11_21_210830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "article_publications", force: :cascade do |t|
-    t.bigint "article_id"
-    t.bigint "catalog_id"
+    t.bigint "article_id", null: false
+    t.bigint "catalog_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_article_publications_on_article_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2018_10_28_171548) do
   end
 
   create_table "articles", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,8 +34,8 @@ ActiveRecord::Schema.define(version: 2018_10_28_171548) do
   end
 
   create_table "catalogs", force: :cascade do |t|
-    t.string "code"
-    t.string "name"
+    t.string "code", null: false
+    t.string "name", null: false
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -44,14 +44,14 @@ ActiveRecord::Schema.define(version: 2018_10_28_171548) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "auth0_id"
+    t.string "auth0_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["auth0_id"], name: "index_users_on_auth0_id", unique: true
   end
 
-  add_foreign_key "article_publications", "articles"
-  add_foreign_key "article_publications", "catalogs"
+  add_foreign_key "article_publications", "articles", on_delete: :cascade
+  add_foreign_key "article_publications", "catalogs", on_delete: :cascade
   add_foreign_key "articles", "users"
   add_foreign_key "catalogs", "users"
 end
