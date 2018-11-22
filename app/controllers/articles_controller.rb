@@ -20,13 +20,10 @@ class ArticlesController < EntityController
     end
   end
 
-  # @note [TMP-001] current user is assigned if no user found
+  # Update an article
   def update_entity
     article = Article.find(params[:id])
     article.update(article_params)
-
-    # [TMP-001]
-    article.update(user: @user) if article.user.nil?
 
     article
   end

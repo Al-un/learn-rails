@@ -21,13 +21,10 @@ class CatalogsController < EntityController
     end
   end
 
-  # @note [TMP-001] current user is assigned if no user found
+  # Update a catalog
   def update_entity
     catalog = Catalog.find(params[:id])
     catalog.update(catalog_params)
-
-    # [TMP-001]
-    catalog.update(user: @user) if catalog.user.nil?
 
     catalog
   end
