@@ -16,7 +16,7 @@ Bundler.require(*Rails.groups)
 module LearnZone
   class Application < Rails::Application
     # puts ' ----------------------------------------------------------------------'
-  puts ' ===[AppConfig]=== start'
+    puts ' ===[AppConfig]=== start'
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
@@ -26,18 +26,9 @@ module LearnZone
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    # Custom environment files
-    if Rails.env.development? || Rails.env.test?
-      config.before_configuration do
-        env_file = File.join(Rails.root, 'config', 'local_env.yml')
-        if File.exist?(env_file)
-          YAML.safe_load(File.open(env_file)).each do |key, value|
-            # Value is required to be a String when provided as an Integer
-            ENV[key.to_s] = value.to_s
-          end
-        end
-      end
-    end
+    # Loading environment variable before Application configuration
+    Dotenv::Railtie.load
+    puts ' ===[AppConfig]=== loading dotenv'
 
     # BAD?
     # http://brettu.com/rails-ruby-tips-203-load-lib-files-in-rails-4/

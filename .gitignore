@@ -27,7 +27,7 @@
 /config/master.key
 
 # Ignore local environment variables
-/config/local_env.yml
+/.env.local
 
 # Ignore Yard documentation
 /doc
