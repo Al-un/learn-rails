@@ -36,11 +36,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'omniauth', '~> 1.6.1'
 gem 'omniauth-auth0', '~> 2.0.0'
 gem 'jwt' # to decode
-# Nested form easy-peasy
-# https://hackhands.com/building-has_many-model-relationship-form-cocoon/
-gem 'cocoon'
-# jQuery
-gem 'jquery-rails' 
+
+# Ajax: jQuery for Rails
+gem 'jquery-rails'
 
 # Logging :
 gem 'lograge'
