@@ -45,6 +45,21 @@ module LearnZone
     # https://stackoverflow.com/a/19650687/4906586
     config.assets.initialize_on_precompile = false
 
+    # Logging is common for all environments
+    puts ' ===[AppConfig]=== Loggers'
+    require 'log/ougai/logger'
+    require 'log/ougai'
+    console_formatter = Log::Ougai::CONSOLE_FORMATTER
+    console_formatter.datetime_format = '%H:%M:%S.%L'
+    file_formatter            = Ougai::Formatters::Bunyan.new
+    file_path                 = 'log/ougai_' + Rails.env
+    file_logger               = Log::Ougai::Logger.new(Rails.root.join(file_path))
+    file_logger.formatter     = file_formatter
+    console_logger            = Log::Ougai::Logger.new(STDOUT)
+    console_logger.formatter  = console_formatter
+    console_logger.extend(Ougai::Logger.broadcast(file_logger))
+    config.logger = console_logger
+
     puts ' ===[AppConfig]=== end'
   end
   
