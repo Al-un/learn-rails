@@ -24,3 +24,4 @@ Temporary code are implemented but not meant to be persistent and must be
 removed when appropriate.
 
  - [TMP-001] products with no user are updated with the currently logged user
+    Removed 761cc262a56b996bf3d71ad2cbf3b1af37ecb9a0.
