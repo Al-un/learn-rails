@@ -36,7 +36,7 @@ module LearnZone
     debug: true, logger: Rails.logger do
       allow do
         origins '*'
-        resource '*', headers: :any, methods: [:get, :post, :options]
+        resource '*', headers: :any, methods: [:get, :post, :patch, :put, :delete]
       end
     end
 
