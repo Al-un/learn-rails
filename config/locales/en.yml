@@ -32,7 +32,7 @@
 en:
   # pure UI stuff
   navigation:
-    home: 'Home'
+    # home: 'Home'
     sign_in: 'Sign in'
     logout: 'Logout'
   # Form
