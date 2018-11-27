@@ -43,7 +43,7 @@ class EntityController < ApplicationController
     respond_to do |format|
       format.html
       format.js
-      format.json { render json: list }
+      format.json { render json: @list }
     end
   end
 
