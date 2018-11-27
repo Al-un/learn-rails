@@ -30,6 +30,16 @@ module LearnZone
     Dotenv::Railtie.load
     puts ' ===[AppConfig]=== loading dotenv'
 
+    # CORS confguration. Check https://github.com/cyu/rack-cors. Must be at the
+    # top
+    config.middleware.insert_before 0, Rack::Cors, 
+    debug: true, logger: Rails.logger do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :options]
+      end
+    end
+
     # BAD?
     # http://brettu.com/rails-ruby-tips-203-load-lib-files-in-rails-4/
     # config.autoload_paths += %W(#{config.root}/lib)

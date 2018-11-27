@@ -51,6 +51,13 @@ gem 'logglier'
 # Environment variable
 gem 'dotenv-rails', groups: [:development, :test]
 
+# Bootstrap for Rails: https://github.com/twbs/bootstrap-rubygem
+# => Workaround: use CSS stylesheets
+# gem 'bootstrap'
+
+# CORS stuff
+gem 'rack-cors'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
