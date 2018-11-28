@@ -3,6 +3,9 @@
 // ---------- navigation components --------------------------------------------
 // Layout related styling
 #nav-toolbar {
+    @include flexbox;
+    height: $toolbar-height;
+    background-color: $color-primary;
     /* auth menu */
     .nav-auth-menu,
     .nav-home-menu {

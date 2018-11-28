@@ -1,13 +1,8 @@
-@import 'base/mixins';
-@import 'base/variables';
+@import "base/mixins";
+@import "base/variables";
 /* Commons classes or styling */
 
 // ---------- Layout -----------------------------------------------------------
-// Pushing a flex layout
-.flex-pusher {
-    flex: 1;
-}
-
 .lowlight-text {
     color: $color-light-grey;
     font-size: 12px;
@@ -51,4 +46,21 @@ button {
     i {
         margin: auto 8px;
     }
+}
+
+// code-like excerpt taking full width
+pre.full-width {
+    @include border-radius();
+    background: #333;
+    color: #2f2;
+    width: 100%;
+    padding: 16px;
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+// FontAwesome icon
+.fas,
+.fa {
+    margin-right: 4px;
 }

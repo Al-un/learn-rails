@@ -40,14 +40,13 @@
       <div class="nav-container">
 
         <!-- Toolbar -->
-        <header class="nav-toolbar navbar">
-          <div class='navbar-nav navbar-toggler' 
-               onclick="document.getElementById('nav-wrapper').classList.toggle('nav-toggle-menu');">
-            <i class="fas fa-bars"></i>
-          </div>
-          <div class='navbar-nav'>
-            <%= render nav_auth_menu_path %>
-          </div>
+        <header class="nav-toolbar navbar">          
+          <button class="nav-toggler btn" type="button"
+            onClick="document.getElementById('nav-wrapper').classList.toggle('nav-toggle-menu');">
+            <span class="fas fa-bars" />
+          </button>
+
+          <%= render nav_auth_menu_path %>
         </header>
         <!-- /Toolbar -->
       
