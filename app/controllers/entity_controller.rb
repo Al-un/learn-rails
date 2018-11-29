@@ -4,7 +4,7 @@
 # is designed to cover basic CRUD functionalities
 #
 # By convention, the methods order is index, show, new, create, edit, update,
-# destroy. 
+# destroy.
 #
 # I prefer to split responses, even if it is not DRY, and not using the responders
 # gem because the data structure may evolve and a simple +respond_with+ may not
@@ -15,7 +15,7 @@
 # @abstract
 #
 # Source:
-# - Execute actions before loading method: 
+# - Execute actions before loading method:
 # https://scotch.io/tutorials/build-a-restful-json-api-with-rails-5-part-one
 class EntityController < ApplicationController
   include Secured
@@ -24,12 +24,12 @@ class EntityController < ApplicationController
   #
   # @param [Class] model_class class of the managed model
   def initialize(model_class, model_path: model_class.name.downcase)
-    # empty parenthesis required => 
+    # empty parenthesis required =>
     # ArgumentError (wrong number of arguments (given 1, expected 0)):
     super()
     # Store model
-    @model_class  = model_class
-    @model_path   = model_path
+    @model_class = model_class
+    @model_path = model_path
 
     logger.debug "Initializing controller for model #{@model_class} with path #{model_path}"
   end
@@ -58,7 +58,7 @@ class EntityController < ApplicationController
     end
   rescue ActiveRecord::RecordNotFound => exception
     respond_to do |format|
-      format.html do 
+      format.html do
         flash[:error] = exception.message
         redirect_to entities_path
       end
@@ -80,7 +80,7 @@ class EntityController < ApplicationController
   # Create (persist in database) a new entity
   def create
     @entity = create_entity
-    
+
     respond_to do |format|
       format.html { redirect_to entity_path(@entity) }
       format.js
@@ -97,7 +97,7 @@ class EntityController < ApplicationController
         render_js_exception(exception)
       end
       format.json do
-        render json: { error: exception_msg }, status: :bad_request
+        render json: {error: exception_msg}, status: :bad_request
       end
     end
   end
@@ -113,7 +113,7 @@ class EntityController < ApplicationController
     end
   rescue ActiveRecord::RecordNotFound => exception
     respond_to do |format|
-      format.html do 
+      format.html do
         flash[:error] = exception.message
         redirect_to entities_path
       end
@@ -138,7 +138,7 @@ class EntityController < ApplicationController
         redirect_to entity_path(params[:id])
       end
       format.json do
-        render json: { error: exception_msg }, status: :bad_request
+        render json: {error: exception_msg}, status: :bad_request
       end
     end
   end
@@ -160,7 +160,7 @@ class EntityController < ApplicationController
         redirect_to entities_path
       end
       format.json do
-        render json: { error: exception_msg }, status: :bad_request
+        render json: {error: exception_msg}, status: :bad_request
       end
     end
   end
@@ -210,7 +210,7 @@ class EntityController < ApplicationController
   #
   # @return [String] new entity path
   def new_entity_path
-    destination_path = 'new_'+ @model_path + '_path'
+    destination_path = 'new_' + @model_path + '_path'
     Rails.application.routes.url_helpers.public_send(destination_path)
   end
 
