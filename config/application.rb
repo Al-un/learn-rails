@@ -46,11 +46,6 @@ module LearnZone
     # https://blog.bigbinary.com/2016/08/29/rails-5-disables-autoloading-after-booting-the-app-in-production.html
     config.eager_load_paths << Rails.root.join('lib')
 
-    # Display if application is currently offline
-    if ENV['OFFLINE_MODE']
-      puts '** /!\ Application is currently is Offline/!\ **'
-    end
-
     # For Heroku
     # https://stackoverflow.com/a/19650687/4906586
     config.assets.initialize_on_precompile = false

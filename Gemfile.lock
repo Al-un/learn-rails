@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/stympy/faker.git
+  revision: d8fa7294f5410bc949e75c6d52524ed289b3a7a3
+  branch: master
+  specs:
+    faker (1.9.1)
+      i18n (>= 0.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -275,6 +283,7 @@ DEPENDENCIES
   dotenv-rails
   duktape
   factory_bot_rails
+  faker!
   jbuilder (~> 2.5)
   jquery-rails
   jwt

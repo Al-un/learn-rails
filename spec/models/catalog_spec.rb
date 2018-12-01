@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe Catalog, type: :model do
   # --- Factory testing
   it 'has a valid Factory' do
-    expect(build(:user)).to be_valid
+    expect(build(:catalog)).to be_valid
   end
 end

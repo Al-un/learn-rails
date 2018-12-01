@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe Article, type: :model do
   # --- Factory testing
   it 'has a valid Factory' do
-    expect(build(:user)).to be_valid
+    expect(build(:article)).to be_valid
   end
 end

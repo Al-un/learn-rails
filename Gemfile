@@ -89,6 +89,9 @@ group :test do
   gem 'simplecov-console'
   # Object factories for dummy data
   gem 'factory_bot_rails'
+  # Fake data for factories
+  # https://github.com/stympy/faker/blob/master/unreleased_README.md#installing
+  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
   # Clean database between test
   gem 'database_cleaner'
 end
