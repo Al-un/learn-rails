@@ -32,8 +32,8 @@ module LearnZone
 
     # CORS confguration. Check https://github.com/cyu/rack-cors. Must be at the
     # top
-    config.middleware.insert_before 0, Rack::Cors, 
-    debug: true, logger: Rails.logger do
+    config.middleware.insert_before 0, Rack::Cors,
+                                    debug: true, logger: Rails.logger do
       allow do
         origins '*'
         resource '*', headers: :any, methods: [:get, :post, :patch, :put, :delete]
@@ -61,16 +61,15 @@ module LearnZone
     require 'log/ougai'
     console_formatter = Log::Ougai::CONSOLE_FORMATTER
     console_formatter.datetime_format = '%H:%M:%S.%L'
-    file_formatter            = Ougai::Formatters::Bunyan.new
-    file_path                 = 'log/ougai_' + Rails.env
-    file_logger               = Log::Ougai::Logger.new(Rails.root.join(file_path))
-    file_logger.formatter     = file_formatter
-    console_logger            = Log::Ougai::Logger.new(STDOUT)
-    console_logger.formatter  = console_formatter
+    file_formatter = Ougai::Formatters::Bunyan.new
+    file_path = 'log/ougai_' + Rails.env
+    file_logger = Log::Ougai::Logger.new(Rails.root.join(file_path))
+    file_logger.formatter = file_formatter
+    console_logger = Log::Ougai::Logger.new(STDOUT)
+    console_logger.formatter = console_formatter
     console_logger.extend(Ougai::Logger.broadcast(file_logger))
     config.logger = console_logger
 
     puts ' ===[AppConfig]=== end'
   end
-  
 end
