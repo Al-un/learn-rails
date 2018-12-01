@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Handling articles entities
 class ArticlesController < EntityController
   # display only is opened to public
@@ -37,7 +39,7 @@ class ArticlesController < EntityController
     logger.debug "Searching articles with #{params} got: #{@searched_list}"
 
     respond_to do |format|
-      format.js   do
+      format.js do
         @partial_path = params[:partial_path]
         @source_id = params[:source_id]
         render 'articles/search'
@@ -51,5 +53,4 @@ class ArticlesController < EntityController
   def article_params
     params.require(:article).permit(:name, :description)
   end
-
 end

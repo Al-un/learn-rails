@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Handling logging out
 #
 # @todo To merge with Auth0Controller?

@@ -13,5 +13,4 @@ module CatalogsHelper
       ('<p>' + t('catalogs.crud.sign_in_to_create') + '</p>').html_safe
     end
   end
-
 end

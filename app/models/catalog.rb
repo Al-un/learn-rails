@@ -2,7 +2,6 @@
 
 # A catalog is a container for articles from where the latter are displayed.
 class Catalog < ApplicationRecord
-
   # associations: products
   has_many :article_publications, inverse_of: :catalog, dependent: :destroy
   has_many :articles, through: :article_publications

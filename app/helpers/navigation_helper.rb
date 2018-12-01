@@ -13,5 +13,4 @@ module NavigationHelper
       'layouts/navigation/sign_in_menu'
     end
   end
-
 end

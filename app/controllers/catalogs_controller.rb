@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Managing catalogs
 class CatalogsController < EntityController
   # ----------------------------------------------------------------------------
@@ -40,7 +42,7 @@ class CatalogsController < EntityController
     logger.debug "Searching catalogs with #{params} got: #{@searched_list}"
 
     respond_to do |format|
-      format.js   do
+      format.js do
         @partial_path = params[:partial_path]
         @source_id = params[:source_id]
         render 'catalogs/search'

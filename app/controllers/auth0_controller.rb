@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Auth0 callback handling controller
 class Auth0Controller < ApplicationController
   # Handle an Auth0 callback

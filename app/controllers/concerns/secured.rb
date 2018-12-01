@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Methods to check user authorization for a given method
 module Secured
   extend ActiveSupport::Concern
@@ -20,7 +22,7 @@ module Secured
       check_logged_in_json
       # Unknown format
     else
-      raise RuntimeError, "Cannot check logged_in? for unknown format:#{req_format}"
+      raise "Cannot check logged_in? for unknown format:#{req_format}"
     end
   end
 
@@ -31,9 +33,7 @@ module Secured
   # @return [String,nil] Authorization header if present
   def http_authorization_token
     auth_header = request.headers['Authorization']
-    if auth_header.present?
-      auth_header.split(' ').last
-    end
+    return auth_header.split(' ').last if auth_header.present?
   end
 
   # Decode authorization token
