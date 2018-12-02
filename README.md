@@ -30,6 +30,7 @@ removed when appropriate.
 
 - Testing
    - FactoryBot
+      - [FactoryBot getting started](https://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md)
       - [Test your factories first](https://robots.thoughtbot.com/testing-your-factories-first)
       - [Testing factories](https://github.com/thoughtbot/factory_bot/wiki/Testing-all-Factories-(with-RSpec))
       - [Factory Traits](https://robots.thoughtbot.com/remove-duplication-with-factorygirls-traits)
