@@ -35,5 +35,6 @@ removed when appropriate.
       - [Testing factories](https://github.com/thoughtbot/factory_bot/wiki/Testing-all-Factories-(with-RSpec))
       - [Factory Traits](https://robots.thoughtbot.com/remove-duplication-with-factorygirls-traits)
    - SimpleCov
-      - [Documentation](https://github.com/colszowka/simplecov)
+      - [Github](https://github.com/colszowka/simplecov)
+      - [Documentation](https://www.rubydoc.info/gems/simplecov/frames)
       - [Rails config](https://andycroll.com/ruby/use-simplecov/)

@@ -2,8 +2,13 @@
 # https://medium.com/the-code-review/display-your-ruby-test-coverage-using-simplecov-gem-and-codeclimate-6db6336fe409
 require 'simplecov'
 require 'simplecov-console'
-SimpleCov.formatter = SimpleCov::Formatter::Console
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  formatter = SimpleCov::Formatter::Console
+  # formatters = SimpleCov::Formatter::MultiFormatter.new([
+  #   SimpleCov::Formatter::HTMLFormatter,
+  #   SimpleCov::Formatter::Console
+  # ])
+end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
