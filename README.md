@@ -31,3 +31,8 @@ removed when appropriate.
 - Testing
    - FactoryBot
       - [Test your factories first](https://robots.thoughtbot.com/testing-your-factories-first)
+      - [Testing factories](https://github.com/thoughtbot/factory_bot/wiki/Testing-all-Factories-(with-RSpec))
+      - [Factory Traits](https://robots.thoughtbot.com/remove-duplication-with-factorygirls-traits)
+   - SimpleCov
+      - [Documentation](https://github.com/colszowka/simplecov)
+      - [Rails config](https://andycroll.com/ruby/use-simplecov/)
