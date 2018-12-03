@@ -77,8 +77,11 @@ jobs:
           command: bundle exec rspec
       # CodeClimate reporting
       - run:
-          name: Code Climate sending report
-          command: ./cc-test-reporter after-build --exit-code $?
+          name: Code Climate sending report (master only)
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./cc-test-reporter after-build --exit-code $?
+            fi
 
       # # collect reports
       # - store_test_results:
