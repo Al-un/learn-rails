@@ -1,6 +1,17 @@
 workflows:
   version: 2
-  build-deploy:
+  # Staging deployment
+  build-deploy-staging:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: development
+  # Production deployment
+  build-deploy-prod:
     jobs:
       - build
       - deploy:
@@ -27,12 +38,10 @@ jobs:
           RAILS_ENV: test
           # https://circleci.com/docs/2.0/databases/
           DATABASE_TEST_URL: postgresql://root@localhost/circle_test
-      
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/ 
       - image: circleci/postgres:9.6.5-alpine-ram
-
     working_directory: ~/repo
 
     steps:
@@ -82,7 +91,7 @@ jobs:
       #     path: /tmp/test-results
       #     destination: test-results
 
-  deploy:
+  deploy-staging:
     docker:
       - image: buildpack-deps:trusty
     steps:
@@ -90,4 +99,14 @@ jobs:
       - run:
           name: Deploy Master to Heroku
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master --force
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_STAGING.git master --force
+
+  deploy-prod:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_PROD.git master --force
