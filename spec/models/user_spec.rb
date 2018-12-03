@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
       user = User.new
       auth0id = 'auth0|this_is_an_id'
       user.auth0_id = auth0id
-      expect(user.to_s).to eq(auth0_id)
+      expect(user.to_s).to eq(auth0id)
     end
   end
 end
