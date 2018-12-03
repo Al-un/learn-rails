@@ -4,17 +4,13 @@ workflows:
   build-deploy-staging:
     jobs:
       - build
-      - deploy:
+      - deploy-staging:
           requires:
             - build
           filters:
             branches:
               only: development
-  # Production deployment
-  build-deploy-prod:
-    jobs:
-      - build
-      - deploy:
+      - deploy-prod:
           requires:
             - build
           filters:
