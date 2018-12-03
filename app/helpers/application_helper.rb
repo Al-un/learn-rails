@@ -17,11 +17,10 @@ module ApplicationHelper
     return text if options.empty?
 
     # truncate if necessary
-    if options.key?(:truncate)
-      text.truncate(options[:truncate], omission: '...')
-      # no valid option
-    else
-      text
-    end
+    truncated = options.key?(:truncate)
+    return text.truncate(options[:truncate], omission: '...') if truncated
+
+    # no valid option
+    text
   end
 end
