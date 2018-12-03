@@ -70,4 +70,15 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Factory Bot
+  # https://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
+  require 'factory_bot_rails'
+  config.include FactoryBot::Syntax::Methods
+
+  # Capybara
+  # https://github.com/teamcapybara/capybara#setup
+  require 'capybara/rspec'
+  Capybara.server = :puma # Until your setup is working
+  Capybara.javascript_driver = :selenium_chrome_headless
 end
