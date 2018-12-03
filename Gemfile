@@ -85,7 +85,7 @@ group :test do
   # the gem 'chromedriver-helper'. (Bundler::GemRequireError)
 
   # CodeClimate test formatting
-  gem 'simplecov', require: false
+  gem 'simplecov'
   gem 'simplecov-console'
   # Object factories for dummy data
   gem 'factory_bot_rails'
