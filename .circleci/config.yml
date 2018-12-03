@@ -42,9 +42,9 @@ jobs:
       # === Testing ===
       # CodeClimate initialization
       - run:
+          # download test reporter as a static binary
           name: Code Climate test-reporter setup
           command: |
-          # download test reporter as a static binary
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
             ./cc-test-reporter before-build 
