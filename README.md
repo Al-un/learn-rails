@@ -1,12 +1,14 @@
 Travis:
-[![Build Status](https://travis-ci.com/Al-un/learn-zone-rails.svg?branch=master)](https://travis-ci.com/Al-un/learn-zone-rails)
+[![Build Status](https://travis-ci.com/Al-un/learnzone-rails.svg?branch=master)](https://travis-ci.com/Al-un/learnzone-rails)
 CircleCI:
-[![CircleCI](https://circleci.com/gh/Al-un/learn-zone-rails/tree/master.svg?style=svg)](https://circleci.com/gh/Al-un/learn-zone-rails/tree/master)
+[![CircleCI](https://circleci.com/gh/Al-un/learnzone-rails.svg?style=svg)](https://circleci.com/gh/Al-un/learnzone-rails)
 
 Code Climate:
 [![Maintainability](https://api.codeclimate.com/v1/badges/7bb038bdf3cf874ef3e9/maintainability)](https://codeclimate.com/github/Al-un/learnzone-rails/maintainability)[![Test Coverage](https://api.codeclimate.com/v1/badges/7bb038bdf3cf874ef3e9/test_coverage)](https://codeclimate.com/github/Al-un/learnzone-rails/test_coverage)
 Codacy:
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/09fa7d649b2c4b488755f37c12644207)](https://www.codacy.com/app/alun/learnzone-rails?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Al-un/learnzone-rails&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/09fa7d649b2c4b488755f37c12644207)](https://www.codacy.com/app/alun/learnzone-rails?utm_source=github.com&utm_medium=referral&utm_content=Al-un/learnzone-rails&utm_campaign=Badge_Grade)
+Codebeat:
+[![codebeat badge](https://codebeat.co/badges/ad1591f7-9321-475e-af03-482b6c296e5f)](https://codebeat.co/projects/github-com-al-un-learnzone-rails-master)
 
 # Learning Zone
 
