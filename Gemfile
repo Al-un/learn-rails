@@ -49,7 +49,7 @@ gem 'ougai-formatters-customizable'
 gem 'logglier'
 
 # Environment variable
-gem 'dotenv-rails', groups: [:development, :test]
+gem 'dotenv-rails'
 
 # Bootstrap for Rails: https://github.com/twbs/bootstrap-rubygem
 # => Workaround: use CSS stylesheets
