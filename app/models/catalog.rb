@@ -14,6 +14,6 @@ class Catalog < ApplicationRecord
   validates_presence_of :code, :name
 
   # Scopes
-  scope :for_name, -> (name) { where('name like ?', "#{name}%") }
-  scope :for_code, -> (code) { where('code like ?', "#{code}%") }
+  scope :for_name, -> (name) { where('name like ?', "%#{name}%") }
+  scope :for_code, -> (code) { where('code like ?', "%#{code}%") }
 end

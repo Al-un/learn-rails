@@ -13,5 +13,5 @@ class Article < ApplicationRecord
   validates_presence_of :name
 
   # Scopes
-  scope :for_name, -> (name) { where('name like ?', "#{name}%") }
+  scope :for_name, -> (name) { where('name like ?', "%#{name}%") }
 end
