@@ -1,17 +1,18 @@
+# frozen_string_literal: true
+
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
-
   root to: 'catalogs#index'
 
   # static pages
-  get 'misc-info' => 'statics#misc_info'
+  get 'misc-info', to: 'statics#misc_info'
 
   # Auth0
-  get 'auth/oauth2/callback' => 'auth0#callback'
-  get 'auth/failure' => 'auth0#failure'
-  get 'auth/logout' => 'logout#logout'
+  get 'auth/oauth2/callback', to: 'auth0#callback', as: 'auth_callback'
+  get 'auth/failure', to: 'auth0#failure', as: 'auth_failure'
+  get 'auth/logout', to: 'auth0#logout', as: 'logout'
 
-  # Articles
+  # Products
   resources :articles do
     resources :article_publications
     collection do
@@ -25,5 +26,4 @@ Rails.application.routes.draw do
     end
   end
   resources :article_publications, only: [:create, :show, :update, :destroy]
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Handling articles entities
 class ArticlesController < EntityController
   # display only is opened to public
@@ -20,13 +22,10 @@ class ArticlesController < EntityController
     end
   end
 
-  # @note [TMP-001] current user is assigned if no user found
+  # Update an article
   def update_entity
     article = Article.find(params[:id])
     article.update(article_params)
-
-    # [TMP-001]
-    article.update(user: @user) if article.user.nil?
 
     article
   end
@@ -40,7 +39,7 @@ class ArticlesController < EntityController
     logger.debug "Searching articles with #{params} got: #{@searched_list}"
 
     respond_to do |format|
-      format.js   do
+      format.js do
         @partial_path = params[:partial_path]
         @source_id = params[:source_id]
         render 'articles/search'
@@ -54,5 +53,4 @@ class ArticlesController < EntityController
   def article_params
     params.require(:article).permit(:name, :description)
   end
-
 end

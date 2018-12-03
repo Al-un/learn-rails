@@ -1,8 +1,7 @@
 class ArticlePublicationsController < EntityController
-
   # ----------------------------------------------------------------------------
   # display only is opened to public
-  before_action :logged_in?, except: [:index, :show] 
+  before_action :logged_in?, except: [:index, :show]
 
   def initialize
     super(ArticlePublication, model_path: 'article_publication')
@@ -62,7 +61,7 @@ class ArticlePublicationsController < EntityController
   #   json_response(@article_publication)
   # end
 
-  # # PATCH /article_publication/:id 
+  # # PATCH /article_publication/:id
   # # !! This is not PUT !!
   # def update
   #   @article_publication.update(article_publication_params)
@@ -84,5 +83,4 @@ class ArticlePublicationsController < EntityController
   # def load_article_publication
   #   @article_publication = ArticlePublication.find(params[:id])
   # end
-
 end

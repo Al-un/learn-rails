@@ -1,11 +1,8 @@
-<div class="card-container">
-  <%= render @list %>
+<div class="container-fluid catalogs-list">
+  <h3>Catalogs</h3>
+  <div class="row">
+    <%= render @list %>
+  </div>
 </div>
 
-<div class="button-row">
-  <%= create_catalog_link %>
-  
-  <%= button_to articles_path, method: :get  do %>
-      <span><i class="fas fa-bone"></i><%= t('articles.crud.list') %></span>
-  <% end %>
-</div>
+<%= create_catalog_link %>

@@ -1,18 +1,36 @@
-<div class="card catalog">
+<div class="col-12 col-md-3 mt-3">
   <%= link_to catalog_path(catalog) do %>
-    <div class="card-content">
+    <div class="card">
+    
       <div class="card-header">
-        [<%= catalog.id %>] <%= catalog.name %>
+        <span><%= catalog.id %>: <%= catalog.name %></span>
       </div>
+
       <div class="card-body">
         <%= display_text(catalog.description, no_text: t('catalogs.no_desc'), truncate: 80) %>
       </div>
+
       <div class="card-footer">
-        <%# [TMP-001] %>
-        [<%= catalog.user %>]
         <%# https://stackoverflow.com/a/52362539/4906586 %>
         <%= t('articles.count', count: catalog.article_publications.size) %>
+
+        <% if session.key?(:userinfo) %>
+        <div>
+          <%= link_to edit_catalog_path(catalog), 
+              class: 'btn btn-info btn-sm', 
+              method: :get  do %>
+              <span class="fas fa-edit"></span><span><%= t('form.edit') %></span>
+          <% end %>
+          <%= link_to catalog_path(catalog), 
+              class: 'btn btn-danger btn-sm',
+              method: :delete, 
+              data: { confirm: t('form.delete_confirm') } do %>
+              <span class="fas fa-trash"></span><span><%= t('form.delete') %></span>
+          <% end %>
+        </div>
+        <% end %>
       </div>
+
     </div>
   <% end %>
 </div>

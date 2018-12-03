@@ -4,20 +4,24 @@
 </div>
 
 <%# Article publications definition %>
-<div id="article_publications" class="card-container">
+<h3>Publications</h3>
+<ul id="article_publications" class="list-group">
   <%= render @entity.article_publications %>
-</div>
+</ul>
 
 <%# Articles search to create article publication %>
-<%= form_with url: search_articles_path, method: :get, local: false do |form| %>
+<% if session.key?(:userinfo) %>
+  <h3>Search Article to add</h3>
+  <%= form_with url: search_articles_path, method: :get, local: false do |form| %>
 
-  <%= form.label :name, "Search for:" %>
-  <%= form.text_field :name %>
+    <%= form.label :name, "Search article:" %>
+    <%= form.text_field :name, placeholder: 'Article name' %>
 
-  <%= form.hidden_field :source_id, value: @entity.id %>
-  <%= form.hidden_field :partial_path, value: 'catalogs/articles/searched' %>
-  <%= form.submit "Search" %>
+    <%= form.hidden_field :source_id, value: @entity.id %>
+    <%= form.hidden_field :partial_path, value: 'catalogs/articles/searched' %>
+    <%= form.submit "Search" %>
 
+  <% end %>
 <% end %>
 
 <div id="searched_articles"></div>

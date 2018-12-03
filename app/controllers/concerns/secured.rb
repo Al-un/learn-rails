@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 # Methods to check user authorization for a given method
-module Secured 
+module Secured
   extend ActiveSupport::Concern
 
   # Check if the current session is a logged in session.
@@ -15,12 +17,12 @@ module Secured
     # HTML browsing / JS (Ajax) rendering
     if req_format.html? || req_format.js?
       check_logged_in_web
-    # JSON request
+      # JSON request
     elsif req_format.json?
       check_logged_in_json
-    # Unknown format
+      # Unknown format
     else
-      raise RuntimeError, "Cannot check logged_in? for unknown format:#{req_format}"
+      raise "Cannot check logged_in? for unknown format:#{req_format}"
     end
   end
 
@@ -31,9 +33,7 @@ module Secured
   # @return [String,nil] Authorization header if present
   def http_authorization_token
     auth_header = request.headers['Authorization']
-    if auth_header.present?
-      auth_header.split(' ').last
-    end
+    return auth_header.split(' ').last if auth_header.present?
   end
 
   # Decode authorization token
@@ -49,8 +49,6 @@ module Secured
 
   # Check restricted access for web browsing
   def check_logged_in_web
-    return if ENV['OFFLINE_MODE']
-
     userinfo = session[:userinfo]
     if userinfo.present?
       @user = get_logged_user(userinfo['uid'])
@@ -63,15 +61,12 @@ module Secured
 
   # Check restricted access for API access (JSON only)
   def check_logged_in_json
-    return if ENV['OFFLINE_MODE']
-
     # check if Bearer is here
-      @auth_payload, @auth_header = auth_token
-      # logger.debug 'Auth_token: ' + auth_token.to_s + ' => ' + @auth_payload['sub'].to_s
-      @user = get_logged_user(@auth_payload['sub'])
-    rescue JWT::VerificationError, JWT::DecodeError => err
-      logger.info `[Auth/JSON] Error: #{err}`
-      render json: { errors: ['Authentication error'] }, status: :unauthorized
+    @auth_payload, @auth_header = auth_token
+    # logger.debug 'Auth_token: ' + auth_token.to_s + ' => ' + @auth_payload['sub'].to_s
+    @user = get_logged_user(@auth_payload['sub'])
+  rescue JWT::VerificationError, JWT::DecodeError => err
+    logger.info `[Auth/JSON] Error: #{err}`
+    render json: {errors: ['Authentication error']}, status: :unauthorized
   end
-
 end

@@ -36,31 +36,27 @@ gem 'jbuilder', '~> 2.5'
 gem 'omniauth', '~> 1.6.1'
 gem 'omniauth-auth0', '~> 2.0.0'
 gem 'jwt' # to decode
-# Nested form easy-peasy
-# https://hackhands.com/building-has_many-model-relationship-form-cocoon/
-gem 'cocoon'
-# jQuery
-gem 'jquery-rails' 
 
-# Logging - Testing : Log4r
-# gem 'log4r'
-# Logging - Testing : Logging
-# gem 'logging'
-# gem 'logging-rails', :require => 'logging/rails'
-# Logging - Testing : Lograge
+# Ajax: jQuery for Rails
+gem 'jquery-rails'
+
+# Logging :
 gem 'lograge'
 gem 'lograge-sql'
-# gem 'lograge-sql', git: 'https://github.com/Al-un/lograge-sql'
-# gem 'lograge-sql', path: '../../../ruby_lograge-sql'
-# Logging - Testing : Ougai with Awesome-print: 
-# https://github.com/tilfin/ougai#use-human-readable-formatter-for-console
 gem 'awesome_print'
 gem 'ougai'
 gem 'ougai-formatters-customizable'
-# gem 'ougai', path: '../../ruby_ougai'
-# gem 'ougai', git: 'https://github.com/Al-un/ougai', branch: 'feature/colorize'
-# Logging - Testing : Loggly
 gem 'logglier'
+
+# Environment variable
+gem 'dotenv-rails', groups: [:development, :test]
+
+# Bootstrap for Rails: https://github.com/twbs/bootstrap-rubygem
+# => Workaround: use CSS stylesheets
+# gem 'bootstrap'
+
+# CORS stuff
+gem 'rack-cors'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -81,7 +77,7 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
+  gem 'capybara'
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   # gem 'chromedriver-helper' 
@@ -93,8 +89,12 @@ group :test do
   gem 'simplecov-console'
   # Object factories for dummy data
   gem 'factory_bot_rails'
+  # Fake data for factories
+  # https://github.com/stympy/faker/blob/master/unreleased_README.md#installing
+  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
   # Clean database between test
-  gem 'database_cleaner'
+  # gem 'database_cleaner'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

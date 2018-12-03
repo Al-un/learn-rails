@@ -1,4 +1,5 @@
 Rails.application.configure do
+  puts ' ===[AppConfig]=== production.rb - start'
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -74,110 +75,5 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  # Logging --------------------------------------------------------------------
-  # Use the lowest log level to ensure availability of diagnostic information
-  # when problems arise.
-  config.log_level = :debug
-  # # === Standard Ruby Logger
-  # # Use default logging formatter so that PID and timestamp are not suppressed.
-  # config.log_formatter = ::Logger::Formatter.new
-
-  # # Use a different logger for distributed setups.
-  # # require 'syslog/logger'
-  # # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
-
-  # if ENV["RAILS_LOG_TO_STDOUT"].present?
-  #   logger           = ActiveSupport::Logger.new(STDOUT)
-  #   logger.formatter = config.log_formatter
-  #   config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  # end
-
-  # # === Logging
-  # # Set the logging destination(s)
-  # config.log_to = %w[file]
-  # # Show the logging configuration on STDOUT
-  # config.show_log_configuration = false
-
-  # === Lograge
-  # see config/initializers/lograge.rb
-
-  # === Ougai
-  # console_logger  = Log::OugaiConsoleLogger.new(STDOUT)
-  # file_logger = Log::OugaiFileLogger.new(Rails.root.join('log/ougai_dev.log'))
-  color_config = Ougai::Formatters::Colors::Configuration.new(
-    severity: {
-      trace:  Ougai::Formatters::Colors::WHITE,
-      debug:  Ougai::Formatters::Colors::GREEN,
-      info:   Ougai::Formatters::Colors::CYAN,
-      warn:   Ougai::Formatters::Colors::YELLOW,
-      error:  Ougai::Formatters::Colors::RED,
-      fatal:  Ougai::Formatters::Colors::PURPLE
-    },
-    msg: :severity,
-    datetime: {
-      default:  Ougai::Formatters::Colors::PURPLE,
-      error:  Ougai::Formatters::Colors::RED,
-      fatal:  Ougai::Formatters::Colors::RED
-    }
-  )
-
-  EXCLUDED_FIELD = []
-  LOGRAGE_REJECT = [:sql_queries, :sql_queries_count]
-
-  console_formatter = Ougai::Formatters::Customizable.new(
-    format_msg: proc do |severity, datetime, _progname, data|
-      # Remove :msg regardless the outcome
-      msg = data.delete(:msg)
-      # Lograge specfic stuff: main controller output handled by msg formatter
-      if data.key?(:request)
-        lograge = data[:request].reject { |k, _v| LOGRAGE_REJECT.include?(k) }
-                                .map { |key, val| "#{key}: #{val}" }
-                                .join(', ')
-        msg = color_config.color(:msg, lograge, severity)
-      # Standard text
-      else
-        msg = color_config.color(:msg, msg, severity)
-      end
-
-      # Standardize output
-      format('%-5s %s: %s',
-             color_config.color(:severity, severity, severity),
-             color_config.color(:datetime, datetime, severity),
-             msg)
-    end,
-    format_data: proc do |data|
-      # Lograge specfic stuff: main controller output handled by msg formatter
-      if data.key?(:request)
-        lograge_data = data[:request]
-        if lograge_data.key?(:sql_queries)
-          lograge_data[:sql_queries].map do |sql_query|
-            format('%<duration>6.2fms %<name>25s %<sql>s (%<type_casted_binds>s)', sql_query)
-          end
-          .join("\n")
-        else
-          nil
-        end
-      # Default styling
-      else
-        EXCLUDED_FIELD.each { |field| data.delete(field) }
-        next nil if data.empty?
-
-        data.ai
-      end
-    end
-  )
-  file_formatter            = Ougai::Formatters::Bunyan.new
-  file_logger               = Log::Ougai::Logger.new(Rails.root.join('log/ougai_prod.log'))
-  file_logger.formatter     = file_formatter
-  console_logger            = Log::Ougai::Logger.new(STDOUT)
-  console_logger.formatter  = console_formatter
-  # testing default configuration: 
-  # console_logger.formatter  = Ougai::Formatters::Readable.new
-  console_logger.extend(Ougai::Logger.broadcast(file_logger))
-  config.logger = console_logger
-
-  # Loggly
-  # see config/initializers/loggly.rb
-
+  puts ' ===[AppConfig]=== production.rb - start'
 end

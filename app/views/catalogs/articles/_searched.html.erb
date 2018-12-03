@@ -1,10 +1,16 @@
-<% @searched_list.each do |article| %>
-  <div>
-    <span><%= article.name %></span>
-    <%= button_to catalog_article_publications_path(@source_id), 
-                  method: :post, remote: true,
-                  params: { article_id: article.id } do %>
-      <span><i class="fas fa-plus"></i><%= t('form.add') %></span>
-    <% end %>
-  </div>
-<% end %>
+<ul class="list-group">
+  <% @searched_list.each do |article| %>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span><%= article.name %></span>
+      <span class="badge">
+        <%= button_to catalog_article_publications_path(@source_id), 
+                      class: 'btn-sm',
+                      method: :post, remote: true,
+                      params: { article_id: article.id } do %>
+          <span class="fas fa-plus"></span>
+          <span>Add</span>
+        <% end %>
+      </span>
+    </li>
+  <% end %>
+</ul>

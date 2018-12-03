@@ -32,7 +32,7 @@
 en:
   # pure UI stuff
   navigation:
-    home: 'Home'
+    # home: 'Home'
     sign_in: 'Sign in'
     logout: 'Logout'
   # Form
@@ -69,4 +69,7 @@ en:
     crud:
       create: Create a catalog
       sign_in_to_create: Please sign in before creating a catalog
+  # Test
+  test:
+    dummy_key: Dummy text
     

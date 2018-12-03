@@ -3,6 +3,7 @@
 require 'lograge/sql/extension'
 
 Rails.application.configure do
+  puts ' ===[AppConfig]=== Initializers: Lograge'
   config.lograge.enabled = true
   config.lograge.formatter = Class.new do |fmt|
     def fmt.call(data)

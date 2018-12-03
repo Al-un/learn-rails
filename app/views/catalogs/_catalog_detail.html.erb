@@ -1,17 +1,29 @@
-<h1>
-  <%= catalog.code %> - <%= catalog.name %>
-</h1>
+<div class="card w-100">
 
-<p><%= catalog.description %></p>
+  <div class="card-header">
+    <h3>
+      Catalog#<%= catalog.id %> [<%= catalog.code %>] <%= catalog.name %>
+    </h3>
+  </div>
 
-<div class="button-row">
-  <%= button_to edit_catalog_path(catalog), method: 'get', remote: true do %>
-    <span><i class="fas fa-edit"></i><%= t('form.edit') %></span>
-  <% end %>
-  <%= button_to catalog_path(catalog), 
-      class: 'delete-button',
-      method: :delete, 
-      data: { confirm: t('form.delete_confirm') } do %>
-      <span><i class="fas fa-trash"></i><%= t('form.delete') %></span>
-  <% end %>
+  <div class="card-body">
+    <span class="card-text"><%= catalog.description %></span>
+  </div>
+
+  <div class="card-footer">
+    <% if session.key?(:userinfo) %>
+      <%= link_to edit_catalog_path(catalog), 
+          class: 'btn btn-info btn-sm', 
+          method: :get  do %>
+          <span class="fas fa-edit"></span><span><%= t('form.edit') %></span>
+      <% end %>
+      <%= link_to catalog_path(catalog), 
+          class: 'btn btn-danger btn-sm',
+          method: :delete, 
+          data: { confirm: t('form.delete_confirm') } do %>
+          <span class="fas fa-trash"></span><span><%= t('form.delete') %></span>
+      <% end %>
+    <% end %>
+  </div>
+
 </div>

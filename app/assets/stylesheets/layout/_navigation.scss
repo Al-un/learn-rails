@@ -1,0 +1,99 @@
+@import "base/mixins";
+@import "base/variables";
+// ---------- navigation components --------------------------------------------
+// Layout related styling
+#nav-toolbar {
+    @include flexbox;
+    height: $toolbar-height;
+    background-color: $color-primary;
+    /* auth menu */
+    .nav-auth-menu,
+    .nav-home-menu {
+        a {
+            @include center-text($toolbar-height);
+            @include hoverable-bg-color( $color-primary, $font-white, $color-primary-light, $font-black);
+            width: 100px;
+            text-decoration: none;
+        }
+    }
+}
+
+/* 
+ * The wrapper of the whole page which mainly handle the toggling between
+ * hidden and shown menu
+ */
+
+.nav-wrapper {
+    @include flexbox();
+    @include align-items(strech);
+    /* Menu toggler */
+    &.nav-toggle-menu {
+        .nav-sidebar {
+            margin-left: 0px;
+        }
+        .nav-backdrop {
+            display: block;
+        }
+    }
+    /* Mobile first:
+     * - Menu is shown by default on desktop while hidden on mobile
+     */
+    @include gt-md {
+        .nav-sidebar {
+            margin-left: 0px;
+        }
+        &.nav-toggle-menu {
+            .nav-sidebar {
+                margin-left: -250px;
+            }
+            .nav-backdrop {
+                display: none;
+            }
+        }
+    }
+}
+
+.nav-sidebar {
+    @include transition(margin-left, 0.2s);
+    min-height: 100vh;
+    width: 250px;
+    margin-left: -250px;
+    z-index: 200;
+    background: white;
+    h1,
+    h2,
+    h3,
+    h4 {
+        height: $toolbar-height;
+        line-height: $toolbar-height;
+        margin: 0;
+    }
+}
+
+.nav-container {
+    @include flexbox();
+    @include flex-direction(column);
+    @include align-items(strech);
+    flex: 1;
+}
+
+.nav-toolbar {
+    height: $toolbar-height;
+    background-color: $color-primary;
+}
+
+.nav-content {
+    padding: 24px;
+    flex: 1;
+}
+
+/* Backdrop layer for mobile menu toggling */
+
+.nav-backdrop {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}

@@ -2,8 +2,13 @@
 # https://medium.com/the-code-review/display-your-ruby-test-coverage-using-simplecov-gem-and-codeclimate-6db6336fe409
 require 'simplecov'
 require 'simplecov-console'
-SimpleCov.formatter = SimpleCov::Formatter::Console
-SimpleCov.start
+SimpleCov.start 'rails' do
+  formatter = SimpleCov::Formatter::Console
+  # formatters = SimpleCov::Formatter::MultiFormatter.new([
+  #   SimpleCov::Formatter::HTMLFormatter,
+  #   SimpleCov::Formatter::Console
+  # ])
+end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
@@ -65,4 +70,15 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Factory Bot
+  # https://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
+  require 'factory_bot_rails'
+  config.include FactoryBot::Syntax::Methods
+
+  # Capybara
+  # https://github.com/teamcapybara/capybara#setup
+  require 'capybara/rspec'
+  Capybara.server = :puma # Until your setup is working
+  Capybara.javascript_driver = :selenium_chrome_headless
 end

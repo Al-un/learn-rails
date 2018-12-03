@@ -16,7 +16,7 @@ Bundler.require(*Rails.groups)
 module LearnZone
   class Application < Rails::Application
     # puts ' ----------------------------------------------------------------------'
-  puts ' ===[AppConfig]=== start'
+    puts ' ===[AppConfig]=== start'
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
@@ -26,16 +26,17 @@ module LearnZone
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    # Custom environment files
-    if Rails.env.development? || Rails.env.test?
-      config.before_configuration do
-        env_file = File.join(Rails.root, 'config', 'local_env.yml')
-        if File.exist?(env_file)
-          YAML.safe_load(File.open(env_file)).each do |key, value|
-            # Value is required to be a String when provided as an Integer
-            ENV[key.to_s] = value.to_s
-          end
-        end
+    # Loading environment variable before Application configuration
+    Dotenv::Railtie.load
+    puts ' ===[AppConfig]=== loading dotenv'
+
+    # CORS confguration. Check https://github.com/cyu/rack-cors. Must be at the
+    # top
+    config.middleware.insert_before 0, Rack::Cors,
+                                    debug: true, logger: Rails.logger do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :patch, :put, :delete]
       end
     end
 
@@ -45,16 +46,25 @@ module LearnZone
     # https://blog.bigbinary.com/2016/08/29/rails-5-disables-autoloading-after-booting-the-app-in-production.html
     config.eager_load_paths << Rails.root.join('lib')
 
-    # Display if application is currently offline
-    if ENV['OFFLINE_MODE']
-      puts '** /!\ Application is currently is Offline/!\ **'
-    end
-
     # For Heroku
     # https://stackoverflow.com/a/19650687/4906586
     config.assets.initialize_on_precompile = false
 
+    # Logging is common for all environments
+    puts ' ===[AppConfig]=== Loggers'
+    require 'log/ougai/logger'
+    require 'log/ougai'
+    console_formatter = Log::Ougai::CONSOLE_FORMATTER
+    console_formatter.datetime_format = '%H:%M:%S.%L'
+    file_formatter = Ougai::Formatters::Bunyan.new
+    file_path = 'log/ougai_' + Rails.env
+    file_logger = Log::Ougai::Logger.new(Rails.root.join(file_path))
+    file_logger.formatter = file_formatter
+    console_logger = Log::Ougai::Logger.new(STDOUT)
+    console_logger.formatter = console_formatter
+    console_logger.extend(Ougai::Logger.broadcast(file_logger))
+    config.logger = console_logger
+
     puts ' ===[AppConfig]=== end'
   end
-  
 end

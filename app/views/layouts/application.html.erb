@@ -5,42 +5,67 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
     <%# FontAwesome icon pack %>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
       integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
       crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
-    <header id="nav-toolbar">
-      <div class='nav-home-menu'>
-        <%= link_to root_path do %>
-          <i class="fas fa-home"></i>
-          <%= t('navigation.home') %>
-        <% end %>
-      </div>
-      <div class='flex-pusher'>
-      </div>
-      <div class='nav-auth-menu'>
-        <%= render nav_auth_menu_path %>
-      </div>
-    </header>
-    <%= link_to '/misc-info', misc_info_path %>
+    <!-- Wrapper -->
+    <div id="nav-wrapper" class="nav-wrapper">
 
-    <div id="nav-container">
-
-      <% flash.each do |lvl, content| %>
-        <div class="flash flash-<%= lvl %>">
-          <%= content %>
+      <!-- Side menu -->
+      <nav class="nav-sidebar">
+        <h3 class="text-center">LearnZone Rails</h3>
+        <div class="list-group">
+          <%= link_to 'Catalogs', catalogs_path, {class: 'list-group-item'} %>
+          <%= link_to 'Articles', articles_path, {class: 'list-group-item'} %>
+          <%= link_to 'Misc-Info', misc_info_path, {class: 'list-group-item'} %>
         </div>
-      <% end %>
+      </nav>
+      <!-- /Side menu -->
+    
+      <!-- Container -->
+      <div class="nav-container">
 
-      <div id="ajax_error"></div>
+        <!-- Toolbar -->
+        <header class="nav-toolbar navbar">          
+          <button class="nav-toggler btn" type="button"
+            onClick="document.getElementById('nav-wrapper').classList.toggle('nav-toggle-menu');">
+            <span class="fas fa-bars" />
+          </button>
 
-      <%= yield %>
+          <%= render nav_auth_menu_path %>
+        </header>
+        <!-- /Toolbar -->
+      
+        <!-- Content -->
+        <main class="nav-content">
+          <% flash.each do |lvl, content| %>
+            <div class="flash flash-<%= lvl %>">
+              <%= content %>
+            </div>
+          <% end %>
+
+          <div id="ajax_error"></div>
+
+          <%= yield %>
+        </main>
+        <!-- /Content -->
+      </div>
+      <!-- /Container -->
     </div>
+    <!-- /Wrapper -->
   </body>
 </html>

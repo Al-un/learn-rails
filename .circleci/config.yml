@@ -1,9 +1,23 @@
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          # filters:
+          #   branches:
+          #     only: master
+
 # Ruby CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
 version: 2
+
 jobs:
+
   build:
     docker:
       # specify the version you desire here
@@ -24,39 +38,42 @@ jobs:
     steps:
       - checkout
 
+      # === Dependencies ===
       # Download and cache dependencies
       - restore_cache:
           keys:
           - learnzone-rails-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
           - learnzone-rails-dependencies-
-
       - run:
-          name: install dependencies
+          name: Install dependencies
           command: bundle install --jobs=4 --retry=3 --path vendor/bundle
-
       - save_cache:
           paths:
             - ./vendor/bundle
           key: learnzone-rails-dependencies-{{ checksum "Gemfile.lock" }}
         
+      # === Testing ===
+      # CodeClimate initialization
+      - run:
+          # download test reporter as a static binary
+          name: Code Climate test-reporter setup
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+            ./cc-test-reporter before-build 
       # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
-
+      - run: 
+          name: Setup database
+          command: bundle exec rails db:setup
       # run tests!
       - run:
-          name: run tests
+          name: RSpec testing
           command: bundle exec rspec
-          # command: |
-          #   mkdir /tmp/test-results
-          #   TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-            
-          #   bundle exec rspec --format progress \
-          #                   --format RspecJunitFormatter \
-          #                   --out /tmp/test-results/rspec.xml \
-          #                   --format progress \
-          #                   $TEST_FILES
+      # CodeClimate reporting
+      - run:
+          name: Code Climate sending report
+          command: ./cc-test-reporter after-build --exit-code $?
 
       # # collect reports
       # - store_test_results:
@@ -64,3 +81,13 @@ jobs:
       # - store_artifacts:
       #     path: /tmp/test-results
       #     destination: test-results
+
+  deploy:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master

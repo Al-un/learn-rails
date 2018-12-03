@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ougai/logger'
+
 module Log
   module Ougai
     class Logger < ::Ougai::Logger

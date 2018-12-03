@@ -51,19 +51,19 @@
 @mixin placeholder {
     &::placeholder {
         opacity: 1;
-        @content
+        @content;
     }
     &::-webkit-input-placeholder {
-        @content
+        @content;
     }
     &:-moz-placeholder {
-        @content
+        @content;
     }
     &::-moz-placeholder {
-        @content
+        @content;
     }
     &:-ms-input-placeholder {
-        @content
+        @content;
     }
 }
 
@@ -90,7 +90,7 @@
 
 // Axis Alignment
 // - applies to: flex containers
-// flex-start | flex-end | center | space-between | space-around 
+// flex-start | flex-end | center | space-between | space-around
 @mixin justify-content($justify: space-between) {
     -webkit-justify-content: $justify;
     -moz-justify-content: $justify;
@@ -101,7 +101,7 @@
 
 // Cross-axis Alignment
 // - applies to: flex containers
-// flex-start | flex-end | center | baseline | stretch 
+// flex-start | flex-end | center | baseline | stretch
 @mixin align-items($align: center) {
     -webkit-align-items: $align;
     -moz-align-items: $align;
