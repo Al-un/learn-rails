@@ -11,17 +11,15 @@ module ApplicationHelper
   # @param options [Number] truncate truncating length
   def display_text(text, no_text: '', **options)
     # no text
-    if text.nil? || text.empty?
-      return "<span class=\"lowlight-text\">#{no_text}</span>".html_safe
-      # no text options
-    elsif options.empty?
-      return text
-    end
+    nil_text = text.nil? || text.empty?
+    return "<span class=\"no-text\">#{no_text}</span>".html_safe if nil_text
+    # no text options
+    return text if options.empty?
 
     # truncate if necessary
     if options.key?(:truncate)
       text.truncate(options[:truncate], omission: '...')
-    # no valid option
+      # no valid option
     else
       text
     end
