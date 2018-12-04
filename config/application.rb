@@ -39,13 +39,18 @@ module LearnZone
     # CORS confguration. Check https://github.com/cyu/rack-cors. Must be at the
     # top
     require 'log/rack_cors'
-    pouet = Log::RackCors.new(STDOUT)
-    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: pouet do
+    cors_logger = Log::RackCors.new(STDOUT)
+    config.middleware.insert_before 0, Rack::Cors,
+                                    debug: true, logger: cors_logger do
       allow do
-        origins '*'
-        resource '*', headers: :any, methods: [:get, :post, :patch, :put, :delete]
+        origins ENV['CORS_ALLOWED_ORIGIN'].split(',')
+        resource '*',
+                 headers: :any,
+                 methods: [:get, :post, :patch, :put, :delete],
+                 maxAge: 86400
       end
     end
+    puts ' ===[AppConfig]=== CORS allowed origin: ' + ENV['CORS_ALLOWED_ORIGIN']
 
     # For Heroku
     # https://stackoverflow.com/a/19650687/4906586
