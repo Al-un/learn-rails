@@ -7,8 +7,11 @@ services:
   - postgresql
 # Caching
 cache:
-  # Caching dependencies
-  - bundler
+  # Caching dependencies: need to refer to directories as install step is
+  # overridden: 
+  # https://docs.travis-ci.com/user/caching/#caching-and-overriding-install-step
+  directories:
+    - vendor/bundle
 
 env:
   global:
@@ -23,7 +26,7 @@ before_install:
   - ./cc-test-reporter before-build
 # Dependencies installation
 install:
-  - bundle install
+  - bundle install --path vendor/bundle
 
 # Script definition
 before_script:
