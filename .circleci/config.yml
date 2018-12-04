@@ -1,7 +1,7 @@
 workflows:
   version: 2
   # Staging deployment
-  build-deploy-staging:
+  build-deploy:
     jobs:
       - build
       - deploy-staging:
@@ -96,9 +96,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Deploy to Heroku (Staging)
+          name: Deploy development to Heroku (Staging)
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_STAGING.git ${CIRCLE_BRANCH} --force
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_STAGING.git development --force
 
   deploy-prod:
     docker:
@@ -106,6 +106,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Deploy to Heroku (Production)
+          name: Deploy master to Heroku (Production)
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_PROD.git ${CIRCLE_BRANCH} --force
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_PROD.git master --force
