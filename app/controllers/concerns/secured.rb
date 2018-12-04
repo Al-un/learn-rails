@@ -66,7 +66,8 @@ module Secured
     # logger.debug 'Auth_token: ' + auth_token.to_s + ' => ' + @auth_payload['sub'].to_s
     @user = get_logged_user(@auth_payload['sub'])
   rescue JWT::VerificationError, JWT::DecodeError => err
-    logger.info `[Auth/JSON] Error: #{err}`
+    logger.debug '[Auth/JSON] Error', @auth_payload, @auth_header
+    logger.warn '[Auth/JSON] Error', err
     render json: {errors: ['Authentication error']}, status: :unauthorized
   end
 end
