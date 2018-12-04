@@ -6,14 +6,14 @@ rvm:
 services:
   - postgresql
 # Caching
-cache: 
+cache:
   # Caching dependencies
-  bundler: true
+  - bundler
 
 env:
   global:
     # CC_TEST_REPORTER_ID defined in environment variables
-    
+
 # Dependencies
 before_install:
   # Code Climate: initialization
@@ -31,10 +31,10 @@ before_script:
 script:
   - bundle exec rails db:migrate RAILS_ENV=test
   - rspec
-  
+
 after_script:
   # Code Climate: sending report
-  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+  - './cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT'
 notifications:
   slack:
     rooms:
