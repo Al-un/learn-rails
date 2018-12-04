@@ -2,11 +2,6 @@ require_relative 'boot'
 
 require 'rails/all'
 # --- Logging stuff
-# require 'log4r'
-# require 'log4r/yamlconfigurator'
-# require 'log4r/outputter/datefileoutputter'
-# include Log4r
-# require 'logging'
 require 'ougai'
 
 # Require the gems listed in Gemfile, including any gems
