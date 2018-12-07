@@ -16,6 +16,12 @@ class CatalogsController < EntityController
     Catalog.all.includes(:article_publications, :user)
   end
 
+  def fetch_by_params_id
+    Catalog
+      .includes(:user, article_publications: :article)
+      .find(params[:id])
+  end
+
   # Assign current user to catalog
   def create_entity
     Catalog.create!(catalog_params) do |catalog|
@@ -49,6 +55,14 @@ class CatalogsController < EntityController
       end
       format.json { render json: @searched_list }
     end
+  end
+
+  def json_render_list(list)
+    render json: list, include: [:user]
+  end
+
+  def json_render_entity(entity)
+    render json: entity
   end
 
   private # --------------------------------------------------------------------

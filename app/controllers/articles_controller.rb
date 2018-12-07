@@ -15,6 +15,12 @@ class ArticlesController < EntityController
     Article.all.includes(:user)
   end
 
+  def fetch_by_params_id
+    Article
+      .includes(:user, article_publications: :catalog)
+      .find(params[:id])
+  end
+
   # Assign current user to article
   def create_entity
     Article.create!(article_params) do |article|
@@ -46,6 +52,14 @@ class ArticlesController < EntityController
       end
       format.json { render json: @searched_list }
     end
+  end
+
+  def json_render_list(list)
+    render json: list, include: [:user]
+  end
+
+  def json_render_entity(entity)
+    render json: entity
   end
 
   private # --------------------------------------------------------------------

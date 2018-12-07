@@ -51,6 +51,9 @@ gem 'logglier'
 # Environment variable
 gem 'dotenv-rails'
 
+# Model serialization
+gem 'active_model_serializers', '~> 0.10.0'
+
 # Bootstrap for Rails: https://github.com/twbs/bootstrap-rubygem
 # => Workaround: use CSS stylesheets
 # gem 'bootstrap'

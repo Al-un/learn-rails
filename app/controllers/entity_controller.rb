@@ -43,7 +43,7 @@ class EntityController < ApplicationController
     respond_to do |format|
       format.html
       format.js
-      format.json { render json: @list }
+      format.json { json_render_list(@list) }
     end
   end
 
@@ -54,7 +54,7 @@ class EntityController < ApplicationController
     respond_to do |format|
       format.html
       format.js
-      format.json { render json: @entity }
+      format.json { json_render_entity(@entity) }
     end
   rescue ActiveRecord::RecordNotFound => exception
     respond_to do |format|
@@ -73,7 +73,7 @@ class EntityController < ApplicationController
     respond_to do |format|
       format.html
       format.js
-      format.json { render json: @entity }
+      format.json { json_render_entity(@entity) }
     end
   end
 
@@ -84,7 +84,7 @@ class EntityController < ApplicationController
     respond_to do |format|
       format.html { redirect_to entity_path(@entity) }
       format.js
-      format.json { render json: @entity }
+      format.json { json_render_entity(@entity) }
     end
   rescue ActiveRecord::RecordInvalid => exception
     respond_to do |format|
@@ -109,7 +109,7 @@ class EntityController < ApplicationController
     respond_to do |format|
       format.html
       format.js
-      format.json { render json: @entity }
+      format.json { json_render_entity(@entity) }
     end
   rescue ActiveRecord::RecordNotFound => exception
     respond_to do |format|
@@ -176,6 +176,16 @@ class EntityController < ApplicationController
   # Fetch a specific entity
   def fetch_by_params_id
     @model_class.find(params[:id])
+  end
+
+  # Serialize a list of entities
+  def json_render_list(list)
+    render json: list, collection_serializer: CollectionSerializer
+  end
+
+  # Serialize a single entity
+  def json_render_entity(entity)
+    render json: entity
   end
 
   # Instantiate a new entity
