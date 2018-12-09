@@ -128,7 +128,7 @@ class EntityController < ApplicationController
     respond_to do |format|
       format.html { redirect_to entity_path(@entity) }
       format.js
-      format.json { head :no_content }
+      format.json { json_render_entity(@entity) }
     end
   rescue ActiveRecord::RecordInvalid => exception
     respond_to do |format|
@@ -150,7 +150,7 @@ class EntityController < ApplicationController
     respond_to do |format|
       format.html { redirect_to entities_path }
       format.js
-      format.json { head :no_content }
+      format.json { json_render_entity({success: true}) }
     end
   rescue => exception
     respond_to do |format|
