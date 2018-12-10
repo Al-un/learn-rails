@@ -11,7 +11,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     authorize_params: {
       audience: ENV['AUTH0_API_AUDIENCE'],
       scope: 'openid profile'
-      # prompt: 'none'
+    # prompt: 'none'
     }
   )
 end

@@ -53,7 +53,7 @@
         <!-- Content -->
         <main class="nav-content">
           <% flash.each do |lvl, content| %>
-            <div class="flash flash-<%= lvl %>">
+            <div class="alert alert-<%= lvl %>">
               <%= content %>
             </div>
           <% end %>
