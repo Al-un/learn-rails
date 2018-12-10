@@ -1,9 +1,45 @@
 
-<%#
-hash  : https://stackoverflow.com/a/19339323/4906586
-CSS   : https://stackoverflow.com/a/52130554/4906586
-%>
-<pre class="full-width">
-  <%= raw JSON.pretty_generate(session[:userinfo]).gsub(" ","&nbsp;") %>
-</pre>
-<%#= debug ENV.to_h.to_yaml %>
+<div>
+  <h3>Misc info page</h3>
+  <%#= debug ENV.to_h.to_yaml %>
+
+  <% if session.key?(:userinfo) %>
+
+    <div>
+      <h4>Access Token</h4>
+      <pre class="full-width"><%= @access_token %></pre>
+      <a href="<%= "https://jwt.io/?token=#{@access_token}" %>" target="_blank"
+        class="btn btn-secondary mb-3" rel="noopener noreferrer">
+        Decrypt on jwt.io
+      </a>
+    </div>
+
+    <div>
+      <h4>ID Token</h4>
+      <pre class="full-width"><%= @id_token %></pre>
+      <a href="<%= "https://jwt.io/?token=#{@id_token}" %>" target="_blank"
+        class="btn btn-secondary mb-3" rel="noopener noreferrer">
+        Decrypt on jwt.io
+      </a>
+    </div>
+
+    <div>
+      <h4>Expires</h4>
+      <pre class="full-width"><%= @expires_at %></pre>
+    </div>
+
+
+    <div>
+      <h4><code>session[:userinfo]</code></h4>
+      <%#
+      hash  : https://stackoverflow.com/a/19339323/4906586
+      CSS   : https://stackoverflow.com/a/52130554/4906586
+      %>
+      <pre class="full-width">
+        <%= raw JSON.pretty_generate(session[:userinfo]).gsub(" ","&nbsp;") %>
+      </pre>
+    </div>
+  <% else %>  
+    <p>No <code>session[:userinfo]</code></p>
+  <% end %>
+</div>
