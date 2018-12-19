@@ -13,6 +13,10 @@
           class: 'w-100' %>
     </div>
 
+    <div className="form-group">
+      <%= f.file_field :picture %>
+    </div>
+
     <%# custom submit text: https://stackoverflow.com/a/4769520/4906586 %>
     <%# https://stackoverflow.com/a/39034203/4906586 %>
     <%= button_tag type: 'submit', id: 'save-button', class: 'btn btn-primary' do %>

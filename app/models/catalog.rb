@@ -9,6 +9,8 @@ class Catalog < ApplicationRecord
   # accepts_nested_attributes_for :articles
   # associations: users
   belongs_to :user, inverse_of: :catalogs, optional: false
+  # active_storage
+  has_one_attached :picture
 
   # validations
   validates_presence_of :code, :name

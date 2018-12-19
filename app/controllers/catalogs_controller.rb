@@ -26,6 +26,7 @@ class CatalogsController < EntityController
   def create_entity
     Catalog.create!(catalog_params) do |catalog|
       catalog.user = @user
+      catalog.picture.attach(params[:comment][:picture])
     end
   end
 
@@ -69,6 +70,6 @@ class CatalogsController < EntityController
 
   # Filter catalogs parameters
   def catalog_params
-    params.require(:catalog).permit(:code, :name, :description)
+    params.require(:catalog).permit(:code, :name, :description, :picture)
   end
 end

@@ -7,7 +7,11 @@
   </div>
 
   <div class="card-body">
-    <span class="card-text"><%= catalog.description %></span>
+    <div class="card-text"><%= catalog.description %></div>
+    <div class="card-text">Picture: 
+      <%= display_picture catalog.picture, placeholder: 'no picture', height: '200',
+          alt: catalog.name + ' picture', title: catalog.name %>
+    </div>
   </div>
 
   <div class="card-footer">
