@@ -32,6 +32,7 @@ class ArticlesController < EntityController
   def update_entity
     article = Article.find(params[:id])
     article.update(article_params)
+    article.pictures.attach(params[:pictures])
 
     article
   end
@@ -65,6 +66,6 @@ class ArticlesController < EntityController
   private # --------------------------------------------------------------------
 
   def article_params
-    params.require(:article).permit(:name, :description)
+    params.require(:article).permit(:name, :description, pictures: [])
   end
 end

@@ -7,7 +7,12 @@
   </div>
 
   <div class="card-body">
-    <span class="card-text"><%= article.description %></span>
+    <div class="card-text"><%= article.description %></div>
+    <div class="card-text">
+      <% article.pictures.each do |picture| %>
+        <%= image_tag picture, height: '200', alt: article.name + ' picture', title: article.name %>
+      <% end %>
+    </div>
   </div>
 
   <div class="card-footer">

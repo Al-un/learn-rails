@@ -11,6 +11,10 @@
           class: 'w-100' %>
     </div>
 
+    <div className="form-group">
+      <%= f.file_field :pictures, multiple: true %>
+    </div>
+
     <%= button_tag type: 'submit', id: 'save-button', class: 'btn btn-primary' do %>
         <span><i class="fas fa-save"></i><%= submit_text %></span>
     <% end %>

@@ -8,6 +8,8 @@ class Article < ApplicationRecord
   # associations: users
   # [TMP-001] optional: true https://stackoverflow.com/a/35775686/4906586
   belongs_to :user, inverse_of: :catalogs, optional: false
+  # active_storage
+  has_many_attached :pictures
 
   # validations
   validates_presence_of :name

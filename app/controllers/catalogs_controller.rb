@@ -26,7 +26,6 @@ class CatalogsController < EntityController
   def create_entity
     Catalog.create!(catalog_params) do |catalog|
       catalog.user = @user
-      catalog.picture.attach(params[:comment][:picture])
     end
   end
 
