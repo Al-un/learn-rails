@@ -59,7 +59,7 @@ class EntityController < ApplicationController
   rescue ActiveRecord::RecordNotFound => exception
     respond_to do |format|
       format.html do
-        flash[:error] = exception.message
+        flash[:danger] = exception.message
         redirect_to entities_path
       end
       format.json { head :not_found }
@@ -80,6 +80,7 @@ class EntityController < ApplicationController
   # Create (persist in database) a new entity
   def create
     @entity = create_entity
+    logger.debug 'Created', entity: @entity
 
     respond_to do |format|
       format.html { redirect_to entity_path(@entity) }
@@ -90,7 +91,7 @@ class EntityController < ApplicationController
     respond_to do |format|
       exception_msg = exception.message
       format.html do
-        flash[:error] = exception_msg
+        flash[:danger] = exception_msg
         redirect_to new_entity_path
       end
       format.js do
@@ -114,7 +115,7 @@ class EntityController < ApplicationController
   rescue ActiveRecord::RecordNotFound => exception
     respond_to do |format|
       format.html do
-        flash[:error] = exception.message
+        flash[:danger] = exception.message
         redirect_to entities_path
       end
       format.json { head :not_found }
@@ -124,6 +125,7 @@ class EntityController < ApplicationController
   # Update (update in database) an existing entity
   def update
     @entity = update_entity
+    logger.debug 'Updated', entity: @entity
 
     respond_to do |format|
       format.html { redirect_to entity_path(@entity) }
@@ -134,7 +136,7 @@ class EntityController < ApplicationController
     respond_to do |format|
       exception_msg = exception.message
       format.html do
-        flash[:error] = exception_msg
+        flash[:danger] = exception_msg
         redirect_to entity_path(params[:id])
       end
       format.json do
@@ -150,13 +152,13 @@ class EntityController < ApplicationController
     respond_to do |format|
       format.html { redirect_to entities_path }
       format.js
-      format.json { json_render_entity({success: true}) }
+      format.json { json_render_entity(success: true) }
     end
   rescue => exception
     respond_to do |format|
       exception_msg = exception.message
       format.html do
-        flash[:error] = exception_msg
+        flash[:danger] = exception_msg
         redirect_to entities_path
       end
       format.json do
