@@ -49,7 +49,7 @@ module LearnZone
 
     # For Heroku
     # https://stackoverflow.com/a/19650687/4906586
-    config.assets.initialize_on_precompile = false
+    # config.assets.initialize_on_precompile = false
 
     # Logging is common for all environments
     puts ' ===[AppConfig]=== Loggers'
