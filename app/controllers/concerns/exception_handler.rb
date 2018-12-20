@@ -28,20 +28,29 @@ module ExceptionHandler
 
   private
 
+  # Add a danger flash and redirect to page
+  # @param [Error] err caught error
   def generic_html_error(err)
     flash[:danger] = err.message
     redirect_back(fallback_location: get_fallback_path)
   end
 
+  # Add a danger flash and redirect to page
+  # @param [Error] err caught error
   def generic_js_error(err)
     flash[:danger] = err.message
     redirect_back(fallback_location: get_fallback_path)
   end
 
+  # render a json with +message+ containing the error message
+  # @param [Error] err caught error
+  # @param [Error] status response status
   def generic_json_error(err, status)
     render json: {message: err.message}, status: status
   end
 
+  # For HTML/JS browsing, always redirect to root_path is not user-friendly. To
+  # fix it, user is redirect to the root path of the entity involved
   def get_fallback_path
     path = request.path
     # check if path matches an entity path

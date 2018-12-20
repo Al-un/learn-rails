@@ -3,7 +3,6 @@
 module Shared
   # Some convenient methods
   module BasicHelper
-
     # Surround a text with +<span>+ tags and returned it through the +html_safe+
     # pipe to be accepted by Rails
     #

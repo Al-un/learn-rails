@@ -7,7 +7,7 @@ class CatalogSerializer < ActiveModel::Serializer
   # optional attributes
   attribute :description, unless: -> { object.description.nil? }
   # optional attributes
-  attribute :picture_url, if: -> { object.picture.attached? }
+  attribute :picture, if: -> { object.picture.attached? }
   # associations
   belongs_to :user
   has_many :article_publications
@@ -18,7 +18,7 @@ class CatalogSerializer < ActiveModel::Serializer
     object.article_publications.count
   end
 
-  def picture_url
-    Rails.application.routes.url_helpers.rails_blob_path(object.picture, only_path: true)
+  def picture
+    PictureSerializer.new(object.picture)
   end
 end
