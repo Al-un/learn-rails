@@ -5,36 +5,57 @@ class ArticlesController < EntityController
   # display only is opened to public
   before_action :logged_in?, except: [:index, :show, :search]
 
-  def initialize
-    super(Article)
+  # def initialize
+  #   super
+  # end
+
+  # -[V2]-----------------------------------------------------------------------
+
+  def index
+    @articles = Article.all
+    respond(@articles, json_opts: {include: [:user]})
   end
 
-  # ----------------------------------------------------------------------------
-  # Articles lazy load users
-  def fetch_all_entities
-    Article.all.includes(:user)
+  def show
+    @article = Article.includes(:user, article_publications: :article)
+                      .find(params[:id])
+    respond(@article)
   end
 
-  def fetch_by_params_id
-    Article
-      .includes(:user, article_publications: :catalog)
-      .find(params[:id])
+  def new
+    @article = Article.new
+    respond(@article)
   end
 
-  # Assign current user to article
-  def create_entity
-    Article.create!(article_params) do |article|
+  def create
+    @article = Article.create!(article_params) do |article|
       article.user = @user
     end
+    logger.debug 'Created', article: @article
+    respond(@article, resp_html: -> { redirect_to @article, success: 'Created !' })
   end
 
-  # Update an article
-  def update_entity
-    article = Article.find(params[:id])
-    article.update(article_params)
-    article.pictures.attach(params[:pictures])
+  def edit
+    @article = Article.includes(:user, article_publications: :article)
+                      .find(params[:id])
+    respond(@article)
+  end
 
-    article
+  def update
+    @article = Article.find(params[:id])
+    @article.update(article_params)
+    @article.pictures.attach(params[:pictures])
+    logger.debug 'Updated', article: @article
+
+    respond(@article, resp_html: -> { redirect_to @article, success: 'Updated!' })
+  end
+
+  def destroy
+    article = Article.find(params[:id])
+    article.destroy
+    respond(article,
+            resp_html: -> { redirect_to articles_path, flash: {success: 'Deleted!'} },
+            json: {success: true})
   end
 
   def delete_picture
@@ -51,6 +72,34 @@ class ArticlesController < EntityController
       format.json { json_render_entity(@entity) }
     end
   end
+
+  # # ----------------------------------------------------------------------------
+  # # Articles lazy load users
+  # def fetch_all_entities
+  #   Article.all.includes(:user)
+  # end
+
+  # def fetch_by_params_id
+  #   Article
+  #     .includes(:user, article_publications: :catalog)
+  #     .find(params[:id])
+  # end
+
+  # # Assign current user to article
+  # def create_entity
+  #   Article.create!(article_params) do |article|
+  #     article.user = @user
+  #   end
+  # end
+
+  # # Update an article
+  # def update_entity
+  #   article = Article.find(params[:id])
+  #   article.update(article_params)
+  #   article.pictures.attach(params[:pictures])
+
+  #   article
+  # end
 
   # ----------------------------------------------------------------------------
 
@@ -70,13 +119,13 @@ class ArticlesController < EntityController
     end
   end
 
-  def json_render_list(list)
-    render json: list, include: [:user]
-  end
+  # def json_render_list(list)
+  #   render json: list, include: [:user]
+  # end
 
-  def json_render_entity(entity)
-    render json: entity
-  end
+  # def json_render_entity(entity)
+  #   render json: entity
+  # end
 
   private # --------------------------------------------------------------------
 

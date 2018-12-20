@@ -18,4 +18,10 @@ class Catalog < ApplicationRecord
   # Scopes
   scope :for_name, -> (name) { where('name like ?', "%#{name}%") }
   scope :for_code, -> (code) { where('code like ?', "%#{code}%") }
+
+  # Lifecycle
+  after_initialize do |catalog|
+    # This avoid nil exception when display picture as it relies on name
+    catalog.name ||= ''
+  end
 end

@@ -6,63 +6,93 @@ class CatalogsController < EntityController
   # display only is opened to public
   before_action :logged_in?, except: [:index, :show]
 
-  def initialize
-    super(Catalog)
+  # def initialize
+  #   super
+  # end
+
+  # -[V2]-----------------------------------------------------------------------
+
+  def index
+    @catalogs = Catalog.all
+    respond(@catalogs, json_opts: {include: [:user]})
   end
 
-  # ----------------------------------------------------------------------------
-  # Catalogs lazy load users
-  def fetch_all_entities
-    Catalog.all.includes(:article_publications, :user)
+  def show
+    @catalog = Catalog.includes(:user, article_publications: :article)
+                      .find(params[:id])
+    respond(@catalog)
   end
 
-  def fetch_by_params_id
-    Catalog
-      .includes(:user, article_publications: :article)
-      .find(params[:id])
+  def new
+    @catalog = Catalog.new
+    respond(@catalog)
   end
 
-  # Assign current user to catalog
-  def create_entity
-    Catalog.create!(catalog_params) do |catalog|
+  def create
+    @catalog = Catalog.create!(catalog_params) do |catalog|
       catalog.user = @user
     end
+    logger.debug 'Created', catalog: @catalog
+    respond(@catalog, resp_html: -> { redirect_to @catalog, success: 'Created !' })
   end
 
-  # Update a catalog
-  def update_entity
+  def edit
+    @catalog = Catalog.includes(:user, article_publications: :article)
+                      .find(params[:id])
+    respond(@catalog)
+  end
+
+  def update
+    @catalog = Catalog.find(params[:id])
+    @catalog.update(catalog_params)
+    logger.debug 'Updated', catalog: @catalog
+
+    respond(@catalog, resp_html: -> { redirect_to @catalog, success: 'Updated!' })
+  end
+
+  def destroy
     catalog = Catalog.find(params[:id])
-    catalog.update(catalog_params)
-
-    catalog
-  end
-
-  # Prepare the creation of a new entity
-  def new
-    @entity = Catalog.new
-    @entity.name = '' # to avoid nil exception for picture
-
-    respond_to do |format|
-      format.html
-      format.js
-      format.json { json_render_entity(@entity) }
-    end
+    catalog.destroy
+    respond(catalog,
+            resp_html: -> { redirect_to catalogs_path, flash: {success: 'Deleted!'} },
+            json: {success: true})
   end
 
   def delete_picture
     logger.debug "Deleting picture from catalog #{params[:id]}"
-    @entity = Catalog.find(params[:id])
-    @entity.picture.purge
+    @catalog = Catalog.find(params[:id])
+    @catalog.picture.purge
 
-    respond_to do |format|
-      format.html do
-        flash[:info] = 'Picture is removed'
-        redirect_to @entity
-      end
-      format.js
-      format.json { json_render_entity(@entity) }
-    end
+    respond(@catalog,
+            resp_html: -> { redirect_to @catalog, flash: {success: 'Deleted!'} })
   end
+
+  # ----------------------------------------------------------------------------
+  # # Catalogs lazy load users
+  # def fetch_all_entities
+  #   Catalog.all.includes(:article_publications, :user)
+  # end
+
+  # def fetch_by_params_id
+  #   Catalog
+  #     .includes(:user, article_publications: :article)
+  #     .find(params[:id])
+  # end
+
+  # # Assign current user to catalog
+  # def create_entity
+  #   Catalog.create!(catalog_params) do |catalog|
+  #     catalog.user = @user
+  #   end
+  # end
+
+  # # Update a catalog
+  # def update_entity
+  #   catalog = Catalog.find(params[:id])
+  #   catalog.update(catalog_params)
+
+  #   catalog
+  # end
 
   # ----------------------------------------------------------------------------
 
@@ -84,13 +114,13 @@ class CatalogsController < EntityController
     end
   end
 
-  def json_render_list(list)
-    render json: list, include: [:user]
-  end
+  # def json_render_list(list)
+  #   render json: list, include: [:user]
+  # end
 
-  def json_render_entity(entity)
-    render json: entity
-  end
+  # def json_render_entity(entity)
+  #   render json: entity
+  # end
 
   private # --------------------------------------------------------------------
 

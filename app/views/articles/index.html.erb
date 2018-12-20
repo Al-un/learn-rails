@@ -1,8 +1,12 @@
 <div class="container-fluid articles-list">
   <h3>Articles</h3>
   <div class="row">
-    <%= render @list %>
+    <%= render @articles %>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col">
+      <%= create_article_link %>
+    </div>
   </div>
 </div>
-
-<%= create_article_link %>
