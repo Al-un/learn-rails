@@ -1,27 +1,56 @@
 <div class="container">
-  <%= form_with model: catalog, local: local do |f| %>
+  <%= form_with model: catalog, local: local do |form| %>
 
-    <div className="form-group">
-      <%= f.text_field :code, placeholder: t('catalogs.field.code')+'*', 
-          class: 'col col-md-2', required: true %>
-      <%= f.text_field :name, placeholder: t('catalogs.field.name')+'*', 
-          class: 'col col-md-9', required: true %>
-    </div>
+    <fieldset class="form-group">
+      <legend>Information</legend>
 
-    <div className="form-group">
-      <%= f.text_area :description, placeholder: t('catalogs.field.desc'), 
-          class: 'w-100' %>
-    </div>
+      <div class="row">
+        <div class="col col-md-2">
+          <%= form.text_field :code, placeholder: t('catalogs.field.code')+'*', required: true, class: 'w-100' %>
+        </div>
+        <div class="col col-md-10">
+          <%= form.text_field :name, placeholder: t('catalogs.field.name')+'*', required: true, class: 'w-100' %>
+        </div>
+      </div>
 
-    <div className="form-group">
-      <%= f.file_field :picture %>
-    </div>
+      <div class="row">
+        <div class="col">
+          <%= form.text_area :description, placeholder: t('catalogs.field.desc'), class: 'w-100' %>
+        </div>
+      </div>
+    </fieldset>
 
-    <%# custom submit text: https://stackoverflow.com/a/4769520/4906586 %>
-    <%# https://stackoverflow.com/a/39034203/4906586 %>
-    <%= button_tag type: 'submit', id: 'save-button', class: 'btn btn-primary' do %>
-        <span><i class="fas fa-save"></i><%= submit_text %></span>
-    <% end %>
+    <fieldset class="form-group">
+      <legend>Picture</legend>
+
+      <div class="row">
+        <div class="col col-md-6">
+          <%= display_picture catalog.picture, placeholder: 'no picture', height: '200',
+              alt: catalog.name + ' picture', title: catalog.name %>
+        </div>
+        <div class="col col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            </div>
+            <div class="custom-file">
+              <%= form.file_field :picture, class: 'custom-file-input btn' %>
+              <label class="custom-file-label" for="catalog_picture">Choose picture</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <div class="row">
+        <%# custom submit text: https://stackoverflow.com/a/4769520/4906586 %>
+        <%# https://stackoverflow.com/a/39034203/4906586 %>
+        <%= button_tag type: 'submit', id: 'save-button', class: 'btn btn-primary' do %>
+            <span><i class="fas fa-save"></i><%= submit_text %></span>
+        <% end %>
+      </div>
+    </fieldset>
 
   <% end %>
 </div>

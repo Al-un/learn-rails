@@ -37,6 +37,33 @@ class CatalogsController < EntityController
     catalog
   end
 
+  # Prepare the creation of a new entity
+  def new
+    @entity = Catalog.new
+    @entity.name = '' # to avoid nil exception for picture
+
+    respond_to do |format|
+      format.html
+      format.js
+      format.json { json_render_entity(@entity) }
+    end
+  end
+
+  def delete_picture
+    logger.debug "Deleting picture from catalog #{params[:id]}"
+    @entity = Catalog.find(params[:id])
+    @entity.picture.purge
+
+    respond_to do |format|
+      format.html do
+        flash[:info] = 'Picture is removed'
+        redirect_to @entity
+      end
+      format.js
+      format.json { json_render_entity(@entity) }
+    end
+  end
+
   # ----------------------------------------------------------------------------
 
   # Search article(s) by:

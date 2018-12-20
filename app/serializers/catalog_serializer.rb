@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 # Serialize a single article
 class CatalogSerializer < ActiveModel::Serializer
-  include ActionView::Helpers::UrlHelper
 
   # mandatory attributes
   attributes :id, :code, :name

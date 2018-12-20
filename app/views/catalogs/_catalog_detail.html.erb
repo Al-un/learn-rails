@@ -8,10 +8,6 @@
 
   <div class="card-body">
     <div class="card-text"><%= catalog.description %></div>
-    <div class="card-text">Picture: 
-      <%= display_picture catalog.picture, placeholder: 'no picture', height: '200',
-          alt: catalog.name + ' picture', title: catalog.name %>
-    </div>
   </div>
 
   <div class="card-footer">
@@ -22,6 +18,32 @@
           <span class="fas fa-edit"></span><span><%= t('form.edit') %></span>
       <% end %>
       <%= link_to catalog_path(catalog), 
+          class: 'btn btn-danger btn-sm',
+          method: :delete, 
+          data: { confirm: t('form.delete_confirm') } do %>
+          <span class="fas fa-trash"></span><span><%= t('form.delete') %></span>
+      <% end %>
+    <% end %>
+  </div>
+
+</div>
+
+<div class="card w-100">
+ 
+  <div class="card-header">
+    <h3>Picture</h3>
+  </div> 
+
+  <div class="card-body">
+    <div class="card-text">Picture: 
+      <%= display_picture catalog.picture, placeholder: 'no picture', height: '200',
+          alt: catalog.name + ' picture', title: catalog.name %>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <% if session.key?(:userinfo) && catalog.picture.attached? %>
+      <%= link_to picture_catalog_path(catalog), 
           class: 'btn btn-danger btn-sm',
           method: :delete, 
           data: { confirm: t('form.delete_confirm') } do %>

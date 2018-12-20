@@ -37,6 +37,21 @@ class ArticlesController < EntityController
     article
   end
 
+  def delete_picture
+    logger.debug "Deleting picture #{params[:pic_id]} from article #{params[:id]}"
+    @entity = Article.find(params[:id])
+    @entity.pictures.find_by_id(params[:pic_id]).purge
+
+    respond_to do |format|
+      format.html do
+        flash[:info] = 'Picture is removed'
+        redirect_to @entity
+      end
+      format.js
+      format.json { json_render_entity(@entity) }
+    end
+  end
+
   # ----------------------------------------------------------------------------
 
   # Search article(s) by:
