@@ -16,6 +16,9 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy-aws-eb:
+          requires:
+            - build
 
 # Ruby CircleCI 2.0 configuration file
 #
@@ -24,7 +27,6 @@ workflows:
 version: 2
 
 jobs:
-
   build:
     docker:
       # specify the version you desire here
@@ -36,7 +38,7 @@ jobs:
           DATABASE_TEST_URL: postgresql://root@localhost/circle_test
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/ 
+      # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/postgres:9.6.5-alpine-ram
     working_directory: ~/repo
 
@@ -47,9 +49,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - learnzone-rails-dependencies-{{ checksum "Gemfile.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - learnzone-rails-dependencies-
+            - learnzone-rails-dependencies-{{ checksum "Gemfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - learnzone-rails-dependencies-
       - run:
           name: Install dependencies
           command: bundle install --jobs=4 --retry=3 --path vendor/bundle
@@ -57,7 +59,7 @@ jobs:
           paths:
             - ./vendor/bundle
           key: learnzone-rails-dependencies-{{ checksum "Gemfile.lock" }}
-        
+
       # === Testing ===
       # CodeClimate initialization
       - run:
@@ -66,9 +68,9 @@ jobs:
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
-            ./cc-test-reporter before-build 
+            ./cc-test-reporter before-build
       # Database setup
-      - run: 
+      - run:
           name: Setup database
           command: bundle exec rails db:setup
       # run tests!
@@ -90,6 +92,7 @@ jobs:
       #     path: /tmp/test-results
       #     destination: test-results
 
+  # Staging deployment
   deploy-staging:
     docker:
       - image: buildpack-deps:trusty
@@ -100,6 +103,7 @@ jobs:
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_STAGING.git development:master --force
 
+  # Production deployment
   deploy-prod:
     docker:
       - image: buildpack-deps:trusty
@@ -109,3 +113,28 @@ jobs:
           name: Deploy master to Heroku (Production)
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_PROD.git master --force
+
+  # Deploy on AWS Elastic Beanstalk
+  deploy-aws-eb:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: Install EB CLI
+          command: |
+            sudo apt-get -y update
+            sudo apt-get -y install python-pip python-dev build-essential
+            sudo pip install awsebcli --upgrade
+      # Problem here
+      - run:
+          name: Create AWS credentials manually
+          command: mkdir ~/.aws
+            touch ~/.aws/config
+            chmod 600 ~/.aws/config
+            echo "[profile eb-cli]" > ~/.aws/config
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/config
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/config
+      - run:
+          name: Deploy to AWS EB
+          command: eb deploy learnzone-rails-eb --profile eb-cli
