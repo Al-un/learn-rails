@@ -1,8 +1,8 @@
 branch-defaults:
   development:
-    environment: learnzone-rails-eb
+    environment: learnzone-rails
 environment-defaults:
-  learnzone-rails-eb:
+  learnzone-rails:
     branch: null
     repository: null
 global:
