@@ -99,8 +99,8 @@ group :test do
   # https://github.com/stympy/faker/blob/master/unreleased_README.md#installing
   # gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
   gem 'faker'
-  # Clean database between test
-  # gem 'database_cleaner'
+  # Clean database between tests
+  gem 'database_cleaner'
 
 end
 
