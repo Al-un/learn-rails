@@ -138,4 +138,4 @@ jobs:
             echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/config
       - run:
           name: Deploy to AWS EB
-          command: eb deploy learnzone-rails-eb --profile eb-cli
+          command: eb deploy learnzone-rails --profile eb-cli
