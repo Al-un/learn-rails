@@ -6,29 +6,59 @@ class CatalogsController < EntityController
   # display only is opened to public
   before_action :logged_in?, except: [:index, :show]
 
-  def initialize
-    super(Catalog)
+  def index
+    @catalogs = Catalog.all
+    respond(@catalogs, json_opts: {include: [:user]})
   end
 
-  # ----------------------------------------------------------------------------
-  # Catalogs lazy load users
-  def fetch_all_entities
-    Catalog.all.includes(:article_publications, :user)
+  def show
+    @catalog = Catalog.includes(:user, article_publications: :article)
+                      .find(params[:id])
+    respond(@catalog)
   end
 
-  # Assign current user to catalog
-  def create_entity
-    Catalog.create!(catalog_params) do |catalog|
+  def new
+    @catalog = Catalog.new
+    respond(@catalog)
+  end
+
+  def create
+    @catalog = Catalog.create!(catalog_params) do |catalog|
       catalog.user = @user
     end
+    logger.debug 'Created', catalog: @catalog
+    respond(@catalog, resp_html: -> { redirect_to @catalog, success: 'Created !' })
   end
 
-  # Update a catalog
-  def update_entity
-    catalog = Catalog.find(params[:id])
-    catalog.update(catalog_params)
+  def edit
+    @catalog = Catalog.includes(:user, article_publications: :article)
+                      .find(params[:id])
+    respond(@catalog)
+  end
 
-    catalog
+  def update
+    @catalog = Catalog.find(params[:id])
+    @catalog.update(catalog_params)
+    logger.debug 'Updated', catalog: @catalog
+
+    respond(@catalog, resp_html: -> { redirect_to @catalog, success: 'Updated!' })
+  end
+
+  def destroy
+    catalog = Catalog.find(params[:id])
+    catalog.destroy
+    respond(catalog,
+            resp_html: -> { redirect_to catalogs_path, flash: {success: 'Deleted!'} },
+            json: {success: true})
+  end
+
+  def delete_picture
+    logger.debug "Deleting picture from catalog #{params[:id]}"
+    @catalog = Catalog.find(params[:id])
+    @catalog.picture.purge
+
+    respond(@catalog,
+            resp_html: -> { redirect_to @catalog, flash: {success: 'Deleted!'} })
   end
 
   # ----------------------------------------------------------------------------
@@ -55,6 +85,6 @@ class CatalogsController < EntityController
 
   # Filter catalogs parameters
   def catalog_params
-    params.require(:catalog).permit(:code, :name, :description)
+    params.require(:catalog).permit(:code, :name, :description, :picture)
   end
 end

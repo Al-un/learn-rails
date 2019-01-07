@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
   # CRSF verification skipped for JSON request only
   skip_before_action :verify_authenticity_token, if: :json_request?
 
+  # Custom flash
+  add_flash_types :error, :success, :info
+
   # Lograge method for adding extra info to Logging
   # https://coderwall.com/p/9x0h6a/better-rails-logging-user_id-remote_ip-with-lograge-on-heroku
   #

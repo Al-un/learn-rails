@@ -1,8 +1,12 @@
 <div class="container-fluid catalogs-list">
   <h3>Catalogs</h3>
   <div class="row">
-    <%= render @list %>
+    <%= render @catalogs %>
+  </div>
+  
+  <div class="row mt-3">
+    <div class="col">
+      <%= create_catalog_link %>
+    </div>
   </div>
 </div>
-
-<%= create_catalog_link %>

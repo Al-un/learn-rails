@@ -18,11 +18,17 @@ Rails.application.routes.draw do
     collection do
       get 'search', to: 'articles#search', as: 'search'
     end
+    member do
+      delete 'pictures/:pic_id', to: 'articles#delete_picture', as: 'pictures'
+    end
   end
   resources :catalogs do
     resources :article_publications
     collection do
       get 'search', to: 'catalogs#search', as: 'search'
+    end
+    member do
+      delete 'picture', to: 'catalogs#delete_picture', as: 'picture'
     end
   end
   resources :article_publications, only: [:create, :show, :update, :destroy]

@@ -5,32 +5,61 @@ class ArticlesController < EntityController
   # display only is opened to public
   before_action :logged_in?, except: [:index, :show, :search]
 
-  def initialize
-    super(Article)
+  def index
+    @articles = Article.all
+    respond(@articles, json_opts: {include: [:user]})
   end
 
-  # ----------------------------------------------------------------------------
-  # Articles lazy load users
-  def fetch_all_entities
-    Article.all.includes(:user)
+  def show
+    @article = Article.includes(:user, article_publications: :article)
+                      .find(params[:id])
+    respond(@article)
   end
 
-  # Assign current user to article
-  def create_entity
-    Article.create!(article_params) do |article|
+  def new
+    @article = Article.new
+    respond(@article)
+  end
+
+  def create
+    @article = Article.create!(article_params) do |article|
       article.user = @user
     end
+    logger.debug 'Created', article: @article
+    respond(@article, resp_html: -> { redirect_to @article, success: 'Created !' })
   end
 
-  # Update an article
-  def update_entity
+  def edit
+    @article = Article.includes(:user, article_publications: :article)
+                      .find(params[:id])
+    respond(@article)
+  end
+
+  def update
+    @article = Article.find(params[:id])
+    @article.update(article_params)
+    @article.pictures.attach(params[:pictures])
+    logger.debug 'Updated', article: @article
+
+    respond(@article, resp_html: -> { redirect_to @article, success: 'Updated!' })
+  end
+
+  def destroy
     article = Article.find(params[:id])
-    article.update(article_params)
-
-    article
+    article.destroy
+    respond(article,
+            resp_html: -> { redirect_to articles_path, flash: {success: 'Deleted!'} },
+            json: {success: true})
   end
 
-  # ----------------------------------------------------------------------------
+  def delete_picture
+    logger.debug "Deleting picture #{params[:pic_id]} from article #{params[:id]}"
+    @article = Article.find(params[:id])
+    @article.pictures.find_by_id(params[:pic_id]).purge
+
+    respond(@article,
+            resp_html: -> { redirect_to @article, flash: {success: 'Picture is removed'} })
+  end
 
   # Search article(s) by:
   # - its name
@@ -51,6 +80,6 @@ class ArticlesController < EntityController
   private # --------------------------------------------------------------------
 
   def article_params
-    params.require(:article).permit(:name, :description)
+    params.require(:article).permit(:name, :description, pictures: [])
   end
 end

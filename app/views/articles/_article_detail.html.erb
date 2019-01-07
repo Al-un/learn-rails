@@ -7,7 +7,9 @@
   </div>
 
   <div class="card-body">
-    <span class="card-text"><%= article.description %></span>
+    <div class="card-text"><%= article.description %></div>
+    <div class="card-text">
+    </div>
   </div>
 
   <div class="card-footer">
@@ -27,3 +29,27 @@
   </div>
 
 </div>
+
+
+<h3>Pictures</h3>
+
+<% article.pictures.each do |picture| %>
+
+  <div class="card">
+    <div class="card-body">
+      <%= image_tag picture, height: '200', alt: article.name + ' picture', title: article.name %>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <% if session.key?(:userinfo) %>
+      <%= link_to pictures_article_path(article, picture.id), 
+          class: 'btn btn-danger btn-sm',
+          method: :delete, 
+          data: { confirm: t('form.delete_confirm') } do %>
+          <span class="fas fa-trash"></span><span><%= t('form.delete') %></span>
+      <% end %>
+    <% end %>
+  </div>
+  
+<% end %>

@@ -1,15 +1,16 @@
 <div class="container">
   <%= form_with model: article, local: local do |f| %>
 
-    <div className="form-group">
+    <fieldset class="form-group">
       <%= f.text_field :name, placeholder: t('articles.field.name')+'*', 
           class: 'w-100', required: true %>
-    </div>
-
-    <div className="form-group">
       <%= f.text_area :description, placeholder: t('articles.field.desc'), 
           class: 'w-100' %>
-    </div>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.file_field :pictures, multiple: true %>
+    </fieldset>
 
     <%= button_tag type: 'submit', id: 'save-button', class: 'btn btn-primary' do %>
         <span><i class="fas fa-save"></i><%= submit_text %></span>

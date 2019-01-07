@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+# ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
@@ -51,12 +51,18 @@ gem 'logglier'
 # Environment variable
 gem 'dotenv-rails'
 
+# Model serialization
+gem 'active_model_serializers', '~> 0.10.0'
+
 # Bootstrap for Rails: https://github.com/twbs/bootstrap-rubygem
 # => Workaround: use CSS stylesheets
 # gem 'bootstrap'
 
 # CORS stuff
-gem 'rack-cors'
+gem 'rack-cors', require: 'rack/cors'
+
+# AWS
+gem 'aws-sdk-s3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -91,9 +97,10 @@ group :test do
   gem 'factory_bot_rails'
   # Fake data for factories
   # https://github.com/stympy/faker/blob/master/unreleased_README.md#installing
-  gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
-  # Clean database between test
-  # gem 'database_cleaner'
+  # gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+  gem 'faker'
+  # Clean database between tests
+  gem 'database_cleaner'
 
 end
 

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LearnZone</title>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -9,7 +12,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
       integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
       crossorigin="anonymous">
-    <!-- Bootstrap CSS -->
+    <%# Bootstrap CSS %>
     <link rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
       integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -22,10 +25,10 @@
   </head>
 
   <body>
-    <!-- Wrapper -->
+    <%# Wrapper %>
     <div id="nav-wrapper" class="nav-wrapper">
 
-      <!-- Side menu -->
+      <%# Side menu %>
       <nav class="nav-sidebar">
         <h3 class="text-center">LearnZone Rails</h3>
         <div class="list-group">
@@ -34,12 +37,12 @@
           <%= link_to 'Misc-Info', misc_info_path, {class: 'list-group-item'} %>
         </div>
       </nav>
-      <!-- /Side menu -->
+      <%# /Side menu %>
     
-      <!-- Container -->
+      <%# Container %>
       <div class="nav-container">
 
-        <!-- Toolbar -->
+        <%# Toolbar %>
         <header class="nav-toolbar navbar">          
           <button class="nav-toggler btn" type="button"
             onClick="document.getElementById('nav-wrapper').classList.toggle('nav-toggle-menu');">
@@ -48,24 +51,27 @@
 
           <%= render nav_auth_menu_path %>
         </header>
-        <!-- /Toolbar -->
+        <%# /Toolbar %>
       
-        <!-- Content -->
+        <%# Content %>
         <main class="nav-content">
           <% flash.each do |lvl, content| %>
-            <div class="flash flash-<%= lvl %>">
+            <div class="alert alert-<%= lvl %>">
               <%= content %>
             </div>
           <% end %>
 
+          <%# For Flash-like notification but with Ajax update %>
+          <div id="ajax_flash"></div>
+          <%# Ajax unhandled errors %>
           <div id="ajax_error"></div>
 
           <%= yield %>
         </main>
-        <!-- /Content -->
+        <%# /Content %>
       </div>
-      <!-- /Container -->
+      <%# /Container %>
     </div>
-    <!-- /Wrapper -->
+    <%# /Wrapper %>
   </body>
 </html>

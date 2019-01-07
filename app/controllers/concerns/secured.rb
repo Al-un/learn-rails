@@ -50,13 +50,22 @@ module Secured
   # Check restricted access for web browsing
   def check_logged_in_web
     userinfo = session[:userinfo]
-    if userinfo.present?
-      @user = get_logged_user(userinfo['uid'])
-      logger.debug "[Auth/Web] User #{@user.auth0_id} is logged"
-    else
+    # missing authenticated information
+    unless userinfo.present?
       logger.info '[Auth/HTML] User redirected to authentication page'
-      redirect_to '/auth/auth0'
+      return redirect_to '/auth/auth0'
     end
+    # Try to decode token
+    token = userinfo.dig('credentials', 'token')
+    Auth0::JsonWebToken.verify(token)
+
+    @user = get_logged_user(userinfo['uid'])
+    logger.debug "[Auth/Web] User #{@user.auth0_id} is logged"
+  rescue JWT::VerificationError, JWT::DecodeError => err
+    logger.warn "[Auth/HTML] Error: #{err.message}"
+    flash[:danger] = 'Not authorized'
+    # https://stackoverflow.com/a/46293172/4906586
+    redirect_back(fallback_location: root_path)
   end
 
   # Check restricted access for API access (JSON only)
@@ -66,7 +75,7 @@ module Secured
     # logger.debug 'Auth_token: ' + auth_token.to_s + ' => ' + @auth_payload['sub'].to_s
     @user = get_logged_user(@auth_payload['sub'])
   rescue JWT::VerificationError, JWT::DecodeError => err
-    logger.info `[Auth/JSON] Error: #{err}`
+    logger.warn "[Auth/JSON] Error: #{err}"
     render json: {errors: ['Authentication error']}, status: :unauthorized
   end
 end

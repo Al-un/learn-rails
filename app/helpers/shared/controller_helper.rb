@@ -23,5 +23,16 @@ module Shared
     def authenticated?
       session.key?(:userinfo)
     end
+
+    # Display a picture if it has any attachment
+    #
+    # @param [String] placeholder rendered if no attachment is found
+    # @param [Hash] options +image_tag+ options: https://apidock.com/rails/ActionView/Helpers/AssetTagHelper/image_tag
+    # @return picture tag
+    def display_picture(picture, placeholder: nil, **options)
+      return placeholder if picture.attachment.nil?
+
+      image_tag picture, options
+    end
   end
 end

@@ -6,14 +6,17 @@ rvm:
 services:
   - postgresql
 # Caching
-cache: 
-  # Caching dependencies
-  bundler: true
+cache:
+  # Caching dependencies: need to refer to directories as install step is
+  # overridden: 
+  # https://docs.travis-ci.com/user/caching/#caching-and-overriding-install-step
+  directories:
+    - vendor/bundle
 
 env:
   global:
     # CC_TEST_REPORTER_ID defined in environment variables
-    
+
 # Dependencies
 before_install:
   # Code Climate: initialization
@@ -23,18 +26,18 @@ before_install:
   - ./cc-test-reporter before-build
 # Dependencies installation
 install:
-  - bundle install
+  - bundle install --path vendor/bundle
 
 # Script definition
 before_script:
   - psql -c 'CREATE DATABASE learn_rails_test;' -U postgres
 script:
   - bundle exec rails db:migrate RAILS_ENV=test
-  - rspec
-  
+  - bundle exec rspec
+
 after_script:
   # Code Climate: sending report
-  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+  - './cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT'
 notifications:
   slack:
     rooms:

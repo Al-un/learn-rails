@@ -1,0 +1,20 @@
+branch-defaults:
+  development:
+    environment: learnzone-rails
+environment-defaults:
+  learnzone-rails:
+    branch: null
+    repository: null
+global:
+  application_name: learnzone
+  default_ec2_keyname: null
+  default_platform: arn:aws:elasticbeanstalk:eu-west-3::platform/Puma with Ruby 2.5
+    running on 64bit Amazon Linux/2.8.7
+  default_region: eu-west-3
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  sc: git
+  workspace_type: Application

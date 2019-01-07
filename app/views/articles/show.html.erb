@@ -1,12 +1,12 @@
 <%# Article definition and edition buttons %>
 <div id="entity">
-  <%= render partial: '/articles/article_detail', locals: { article: @entity } %>
+  <%= render partial: '/articles/article_detail', locals: { article: @article } %>
 </div>
 
 <%# Article publications definition %>
 <h3>Publications</h3>
 <ul id="article_publications" class="list-group">
-  <%= render @entity.article_publications %>
+  <%= render @article.article_publications %>
 </ul>
 
 <%# Catalogs search to create article publication %>
@@ -17,7 +17,7 @@
     <%= form.label :name, "Search catalog:" %>
     <%= form.text_field :name, placeholder: 'Catalog name' %>
 
-    <%= form.hidden_field :source_id, value: @entity.id %>
+    <%= form.hidden_field :source_id, value: @article.id %>
     <%= form.hidden_field :partial_path, value: 'articles/catalog/searched' %>
     <%= form.submit "Search" %>
 
