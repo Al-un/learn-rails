@@ -1,0 +1,15 @@
+# Defining Ruby version(s)
+language: ruby
+rvm:
+  - 2.6.0
+# Caching
+cache:
+  directories:
+    - vendor/bundle
+
+# Dependencies
+install:
+  - bundle install --path vendor/bundle
+
+script:
+  - echo "Testing TODO"
